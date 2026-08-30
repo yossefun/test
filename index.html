@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>חופשה משפחתית בתאילנד | 10–24 בנובמבר</title>
+  <title>חופשה משפחתית בתאילנד 2026 | משפחת אבוחצירא</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -15,10 +15,11 @@
       --text: #1e293b;
       --text-muted: #64748b;
       --border: #e2e8f0;
+      --danger: #ef4444;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rubik', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; direction: rtl; }
 
     /* Hero Section */
     .hero {
@@ -26,12 +27,13 @@
                   url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80') center/cover;
       color: white;
       text-align: center;
-      padding: 60px 20px;
+      padding: 50px 20px;
       border-bottom-left-radius: 24px;
       border-bottom-right-radius: 24px;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
     }
-    .hero h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 8px; }
+    .hero h1 { font-size: 2.3rem; font-weight: 700; margin-bottom: 8px; }
     .hero p { font-size: 1.1rem; opacity: 0.95; }
     .badge {
       display: inline-block;
@@ -44,21 +46,53 @@
       font-size: 0.9rem;
     }
 
-    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+    .container { max-width: 950px; margin: 0 auto; padding: 0 15px; }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .tab-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 12px 12px 0 0;
+      cursor: pointer;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+
+    .tab-btn:hover { background: #f1f5f9; color: var(--text); }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 700; }
+
+    .sub-tab-btn { background: #e0f2fe; border: 1px solid var(--primary); color: var(--primary-dark); padding: 6px 14px; border-radius: 15px; cursor: pointer; font-weight: bold; margin-left: 5px; }
+    .sub-tab-btn.active { background: var(--primary); color: white; }
+
+    .section-block { display: none; background: var(--card); padding: 24px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border); }
+    .section-block.active { display: block; }
 
     .section-title {
       font-size: 1.4rem;
       color: var(--primary-dark);
-      margin: 32px 0 16px 0;
+      margin: 24px 0 16px 0;
       border-right: 4px solid var(--primary);
       padding-right: 10px;
     }
 
     /* Table Styling */
-    .table-container { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px; }
+    .table-container { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px; border: 1px solid var(--border); }
     table { width: 100%; border-collapse: collapse; background: var(--card); }
     th, td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
-    th { background: #e0f2fe; color: var(--primary-dark); font-weight: 700; }
+    th { background: #e0f2fe; color: var(--primary-dark); font-weight: 700; white-space: nowrap; }
     tr:last-child td { border-bottom: none; }
 
     /* Timeline Section */
@@ -69,6 +103,9 @@
       padding: 16px 20px;
       border-right: 4px solid var(--accent);
       box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: 1px solid var(--border);
     }
     .timeline-date { font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px; }
     .timeline-desc { color: var(--text); font-size: 0.95rem; }
@@ -84,8 +121,21 @@
       border-radius: 8px;
       border: 1px solid var(--border);
       font-size: 0.95rem;
+      cursor: pointer;
     }
     .checklist-item input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+
+    /* Form Elements */
+    .flex-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+    .card-box { flex: 1; min-width: 280px; background: #f8fafc; padding: 18px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px; }
+    input, select, button { width: 100%; padding: 10px 14px; margin-top: 6px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 0.95rem; }
+    button.btn-main { background: var(--primary); color: white; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
+    button.btn-main:hover { background: var(--primary-dark); }
+    .btn-danger { background: var(--danger); color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; width: auto; font-size: 0.85rem; }
+
+    .date-selector { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 15px; }
+    .date-chip { padding: 8px 14px; background: #e0f2fe; color: var(--primary-dark); border-radius: 20px; cursor: pointer; font-size: 0.9rem; white-space: nowrap; font-weight: 500; }
+    .date-chip.active { background: var(--primary); color: white; font-weight: bold; }
 
     /* Footer Section */
     .footer {
@@ -103,120 +153,531 @@
 </head>
 <body>
 
+  <!-- Header / Hero Section -->
   <header class="hero">
     <h1>חופשה משפחתית בתאילנד</h1>
-    <p>פוקט & בנגקוק | 10–24 בנובמבר</p>
+    <p>יוסף, שירן, אייל (16) ושי (14) | פוקט & בנגקוק | 10–24 בנובמבר</p>
     <div class="badge">תאילנד 2026 🌴</div>
   </header>
 
   <div class="container">
 
-    <h2 class="section-title">מידע מהיר ופרטי טיסות</h2>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>נושא</th>
-            <th>פרטים</th>
-            <th>הערות ואישורים</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><strong>טיסת הלוך</strong></td>
-            <td>10/11: המראה מישראל $\rightarrow$ נחיתה בפוקט</td>
-            <td>טיסה ישירה / קונקשן</td>
-          </tr>
-          <tr>
-            <td><strong>טיסת פנים</strong></td>
-            <td>20/11: פוקט (HKT) $\rightarrow$ בנגקוק (BKK)</td>
-            <td>כרטיסים מוזמנים</td>
-          </tr>
-          <tr>
-            <td><strong>טיסת חזור</strong></td>
-            <td>24/11: המראה מבנגקוק $\rightarrow$ נחיתה בישראל</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>לינה בפוקט</strong></td>
-            <td>אתר נופש וספא (10/11 – 20/11)</td>
-            <td>כולל ארוחת בוקר</td>
-          </tr>
-          <tr>
-            <td><strong>לינה בבנגקוק</strong></td>
-            <td>מלון במרכז העיר (20/11 – 24/11)</td>
-            <td>גישה נוחה לרכבת ולשופינג</td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="showTab('quick-info', this)">📌 מידע מהיר</button>
+        <button class="tab-btn" onclick="showTab('itinerary', this)">📅 לוח זמנים יומי</button>
+        <button class="tab-btn" onclick="showTab('expenses', this)">💰 הוצאות וקבליות</button>
+        <button class="tab-btn" onclick="showTab('packing', this)">🧳 רשימות ציוד</button>
+        <button class="tab-btn" onclick="showTab('bucket', this)">⭐ יעדים חייבים</button>
     </div>
 
-    <h2 class="section-title">תוכנית הטיול היומית</h2>
-    <div class="timeline">
-      <div class="timeline-card">
-        <div class="timeline-date">10/11 (יום ג') - פוקט</div>
-        <div class="timeline-desc">נחיתה בפוקט, העברה למלון, התארגנות ומנוחה בבריכה, ערב רגוע בשוק לילה מקומי.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">11/11 (יום ד') - יום חוף וספורט ימי</div>
-        <div class="timeline-desc">אופנועי ים, מצנח רחיפה וסיור ערב באזור הפטונג.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">12/11 (יום ה') - שייט לאיי פיפי</div>
-        <div class="timeline-desc">שייט יום שלם כולל שנורקלינג, ארוחת צהריים באי וביקור במערת הוויקינגים.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">13/11 (יום ו') - אקסטרים בטבע</div>
-        <div class="timeline-desc">טיול טרקטורונים (ATV) ופארק אומגות (Zipline) בג'ונגל.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">14/11 (יום ש') - שמורת פילים ومפלים</div>
-        <div class="timeline-desc">ביקור בשמורת פילים אקולוגית (ללא רכיבה) ושחייה במפלים.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">15/11–19/11 - ימי נופש ואטרקציות</div>
-        <div class="timeline-desc">שילוב בין ימי מנוחה בים, פארק המים Andamanda, שייט לאי ג'יימס בונד ושופינג ב-Central Phuket.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">20/11 (יום ו') - מגיעים לבנגקוק</div>
-        <div class="timeline-desc">טיסת פנים לבנגקוק, צ'ק-אין במלון, יציאה לבר רופטופ לתצפית שקיעה על העיר.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">21/11 (יום ש') - שווקים ונהר</div>
-        <div class="timeline-desc">שוק סוף השבוע Chatuchak ושייט בסירת ארוכת-זנב בנהר צ'או פראיה.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">22/11 (יום א') - יום שופינג מרכזי</div>
-        <div class="timeline-desc">מתחמי קניות ממוזגים: MBK, Siam Paragon ומתחם ICONSIAM.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">23/11 (יום ב') - תרבות ולילה</div>
-        <div class="timeline-desc">ארמון המלך, מקדש וואט פו, וסיור ערב בשוק הלילה Jodd Fairs.</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-date">24/11 (יום ג') - חזרה הביתה</div>
-        <div class="timeline-desc">אריזות, קניות אחרונות, פינוי המלון והעברה לשדה התעופה לטיסה לישראל.</div>
-      </div>
+    <!-- 0. QUICK INFO TAB (DESIGN MATCHED EXACTLY) -->
+    <div id="quick-info" class="section-block active" style="padding:0; background:transparent; border:none; box-shadow:none;">
+        
+        <h2 class="section-title" style="margin-top:0;">מידע מהיר ופרטי טיסות</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>נושא</th>
+                <th>פרטים</th>
+                <th>הערות ואישורים</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>טיסת הלוך</strong></td>
+                <td>10/11: המראה 06:20 מנתב"ג ➔ אבו דאבי (EY610) ➔ פוקט (EY414)</td>
+                <td>נחיתה בפוקט ב-23:50 | Etihad Airways</td>
+              </tr>
+              <tr>
+                <td><strong>טיסת פנים</strong></td>
+                <td>22/11: פוקט (HKT) ➔ בנגקוק (BKK)</td>
+                <td>המראה 11:50, נחיתה 13:20 | טיסה TG206</td>
+              </tr>
+              <tr>
+                <td><strong>טיסת חזור</strong></td>
+                <td>24/11: המראה 14:40 מבנגקוק (EY405) ➔ אבו דאבי ➔ נתב"ג (EY599)</td>
+                <td>נחיתה בישראל ב-23:40 | Etihad Airways</td>
+              </tr>
+              <tr>
+                <td><strong>לינה בפוקט</strong></td>
+                <td>מלון / אתר נופש בפוקט (10/11 – 22/11)</td>
+                <td>12 לילות | כולל ארוחת בוקר</td>
+              </tr>
+              <tr>
+                <td><strong>לינה בבנגקוק</strong></td>
+                <td>מלון במרכז העיר בנגקוק (22/11 – 24/11)</td>
+                <td>2 לילות | גישה נוחה לרכבת ולשופינג</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2 class="section-title">תוכנית הטיול היומית</h2>
+        <div class="timeline">
+          <div class="timeline-card">
+            <div class="timeline-date">10/11 (יום ג') - טיסה ונחיתה בפוקט</div>
+            <div class="timeline-desc">המראה מנתב"ג ב-06:20 (טיסה EY610), קונקשן באבו דאבי והמשך לפוקט (EY414). נחיתה ב-23:50, העברה למלון וצ'ק-אין.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">11/11 (יום ד') - פוקט: התארגנות, מנוחה וים</div>
+            <div class="timeline-desc">התאוששות מהטיסה, מנוחה בבריכה/בחוף, התארגנות ראשונית וסיור ערב רגוע בסביבת המלון.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">12/11 (יום ה') - יום חוף, אטרקציות ימיות וספורט ימי</div>
+            <div class="timeline-desc">אופנועי ים, מצנח רחיפה, בילוי בחוף וסיור ערב באזור הפטונג ושוק הלילה.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">13/11 (יום ו') - ערב שבת בפוקט</div>
+            <div class="timeline-desc">הכנות לשבת, טיול קל באזור, וארוחת ליל שבת חגיגית בבית חב"ד פוקט (18:30).</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">14/11 (יום ש') - שבת מנוחה בפוקט</div>
+            <div class="timeline-desc">יום מנוחה משפחתי, בילוי רגוע במלון ובחוף הים, יציאה במוצ"ש לטיול ערב.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">15/11–19/11 - פוקט: אטרקציות, שייט ואקסטרים</div>
+            <div class="timeline-desc">שילוב ימים: שייט לאיי פיפי ושנורקלינג, פארק המים Andamanda, טיול טרקטורונים (ATV) בג'ונגל, ביקור בשמורת פילים ושופינג ב-Central Phuket.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">20/11–21/11 - פוקט: נופש, ספורט ימי וסוף שבוע</div>
+            <div class="timeline-desc">ימי נופש נוספים, בילוי בחוף, עיסויים תאילנדיים, קניות אחרונות בפוקט והיערכות למעבר לבנגקוק.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">22/11 (יום א') - מעבר לבנגקוק</div>
+            <div class="timeline-desc">צ'ק-אאוט בפוקט, טיסת פנים TG206 לבנגקוק (11:50 ➔ 13:20). צ'ק-אין במלון בבנגקוק, יציאה לבר רופטופ לתצפית שקיעה.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">23/11 (יום ב') - בנגקוק: יום שופינג מרכזי ותרבות</div>
+            <div class="timeline-desc">מתחמי קניות ממוזגים: MBK, Siam Paragon ומתחם ICONSIAM על הנהר. סיור ערב בשוק הלילה Jodd Fairs.</div>
+          </div>
+          <div class="timeline-card">
+            <div class="timeline-date">24/11 (יום ג') - חזרה לישראל</div>
+            <div class="timeline-desc">אריזות, קניות אחרונות, פינוי המלון והעברה לשדה התעופה BKK. טיסה EY405 ב-14:40 ➔ אבו דאבי ➔ EY599 לנחיתה בנתב"ג ב-23:40.</div>
+          </div>
+        </div>
+
+        <h2 class="section-title">ציוד וארגון מוקדם</h2>
+        <div class="checklist-grid" id="quickChecklistGrid">
+          <!-- Rendered dynamically by JavaScript -->
+        </div>
+
+        <footer class="footer">
+          <h3>אנשי קשר וקישורים חיוניים</h3>
+          <p><strong>שגרירות ישראל בבנגקוק:</strong> <a href="tel:+6622049200">+66-2-2049200</a></p>
+          <p><strong>משטרת התיירות בתאילנד:</strong> <a href="tel:1155">1155</a> | <strong>אמבולנס:</strong> <a href="tel:1669">1669</a></p>
+          <p><strong>בית חב"ד פוקט:</strong> <a href="https://maps.google.com/?q=Chabad+House+Phuket" target="_blank">ניווט ב-Google Maps</a></p>
+        </footer>
+
     </div>
 
-    <h2 class="section-title">ציוד וארגון מוקדם</h2>
-    <div class="checklist-grid">
-      <label class="checklist-item"><input type="checkbox"> דרכונים בתוקף (לפחות 6 חודשים)</label>
-      <label class="checklist-item"><input type="checkbox"> ביטוח נסיעות (כולל ספורט אתגרי)</label>
-      <label class="checklist-item"><input type="checkbox"> כרטיסי אשראי בינלאומיים + מזומן</label>
-      <label class="checklist-item"><input type="checkbox"> נרתיק אטום למים לטלפון</label>
-      <label class="checklist-item"><input type="checkbox"> בגדי ים וציוד שנורקלינג</label>
-      <label class="checklist-item"><input type="checkbox"> חבילת גלישה / eSIM מותקן</label>
+    <!-- 1. ITINERARY TAB (INTERACTIVE) -->
+    <div id="itinerary" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">📅 לוח זמנים יומי דינמי (09.11.26 - 24.11.26)</h2>
+        <div class="date-selector" id="dateChips"></div>
+
+        <div id="dayContent" class="card-box" style="margin-bottom: 20px;"></div>
+
+        <div class="card-box" style="background: var(--card);">
+            <h3>➕ הוספת אירוע / תזכורת ליום הנבחר</h3>
+            <div class="flex-grid">
+                <div style="flex:1;">
+                    <input type="text" id="eventTitle" placeholder="תיאור האירוע">
+                    <select id="eventType">
+                        <option value="✈️ טיסה">✈️ טיסה</option>
+                        <option value="🏨 מלון">🏨 מלון</option>
+                        <option value="🎡 אטרקציה">🎡 אטרקציה</option>
+                        <option value="🍽️ מסעדה">🍽️ מסעדה</option>
+                        <option value="📝 תזכורת">📝 משימה / תזכורת</option>
+                    </select>
+                </div>
+                <div style="flex:1;">
+                    <input type="text" id="eventTime" placeholder="שעה (לדוגמה: 14:30)">
+                    <input type="text" id="eventLink" placeholder="קישור למיקום / מפה (רשות)">
+                    <button class="btn-main" onclick="addCustomEvent()">הוסף אירוע ליום זה</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <footer class="footer">
-      <h3>אנשי קשר וקישורים חיוניים</h3>
-      <p><strong>שגרירות ישראל בבנגקוק:</strong> <a href="tel:+6622049200">+66-2-2049200</a></p>
-      <p><strong>מוקד חרם / ביטוח:</strong> מופיע בפוליסת הביטוח</p>
-      <p><a href="#">פתחי אלבום תמונות משותף ב-Google Photos</a></p>
-    </footer>
+    <!-- 2. EXPENSES TAB -->
+    <div id="expenses" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">💰 מחשבון המרה ומעקב הוצאות</h2>
+        <div class="flex-grid">
+            <div class="card-box">
+                <h3>💱 מחשבון המרה (THB ➔ ILS)</h3>
+                <label>סכום בבאט (THB):</label>
+                <input type="number" id="thbAmount" placeholder="0" oninput="convertCurrency()">
+                <label>שער חליפין משוער (1 ש"ח בבאט):</label>
+                <input type="number" id="exchangeRate" value="9.5" step="0.1" oninput="convertCurrency()">
+                <h4 style="margin-top: 10px;">סה"כ בשקלים: <span id="ilsResult" style="color:var(--primary-dark);">0</span> ₪</h4>
+            </div>
+
+            <div class="card-box">
+                <h3>➕ הוספת הוצאה חדשה</h3>
+                <input type="date" id="expDate">
+                <input type="text" id="expDesc" placeholder="תיאור ההוצאה (למשל: מונית / מלון / ארוחה)">
+                <input type="number" id="expCost" placeholder="סכום בבאט (THB)">
+                <select id="expCategory">
+                    <option value="אוכל">🍽️ אוכל</option>
+                    <option value="תחבורה">🚕 תחבורה</option>
+                    <option value="אטרקציות">🎟️ אטרקציות</option>
+                    <option value="קניות">🛍️ קניות</option>
+                    <option value="מלון">🏨 לינה</option>
+                </select>
+                <button class="btn-main" onclick="addExpense()">רשום הוצאה</button>
+            </div>
+        </div>
+
+        <h3 style="margin-top:20px;">📊 פירוט הוצאות</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>תאריך</th>
+                        <th>תיאור</th>
+                        <th>קטגוריה</th>
+                        <th>סכום (THB)</th>
+                        <th>סכום (₪)</th>
+                        <th>פעולות</th>
+                    </tr>
+                </thead>
+                <tbody id="expensesTable"></tbody>
+            </table>
+        </div>
+        <h4 style="text-align: left; margin-top: 10px;">
+            סה"כ הוצאות: <span id="totalExpensesTHB" style="color:var(--accent);">0</span> THB (<span id="totalExpensesILS" style="color:var(--primary);">0</span> ₪)
+        </h4>
+    </div>
+
+    <!-- 3. PACKING TAB -->
+    <div id="packing" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">🧳 רשימת ציוד אישית לפי נוסע</h2>
+        <div style="margin-bottom: 20px;">
+            <button class="sub-tab-btn active" onclick="switchPerson('יוסף', this)">👨 יוסף</button>
+            <button class="sub-tab-btn" onclick="switchPerson('שירן', this)">👩 שירן</button>
+            <button class="sub-tab-btn" onclick="switchPerson('אייל', this)">👦 אייל (16)</button>
+            <button class="sub-tab-btn" onclick="switchPerson('שי', this)">👧 שי (14)</button>
+        </div>
+
+        <div class="card-box" style="margin-bottom: 20px; background: var(--card);">
+            <h3>הוספת פריט אישי ל-<span id="personTitle" style="color:var(--primary);">יוסף</span></h3>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="newPackingItem" placeholder="שם הפריט להוספה">
+                <button class="btn-main" style="width: auto; white-space: nowrap; margin-bottom:12px;" onclick="addPackingItem()">הוסף פריט</button>
+            </div>
+        </div>
+
+        <div id="personalPackingContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px;"></div>
+    </div>
+
+    <!-- 4. BUCKET LIST TAB -->
+    <div id="bucket" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">⭐ "יעדים חייבים" – רשימת החלומות המשפחתית</h2>
+        <div class="card-box">
+            <input type="text" id="bucketPerson" placeholder="שם הנוסע (יוסף / שירן / אייל / שי)">
+            <input type="text" id="bucketWish" placeholder="הפעילות/המקום שתרצו לבקר">
+            <button class="btn-main" onclick="addBucketItem()">הוסף לרשימה</button>
+        </div>
+        
+        <div class="table-container" style="margin-top:20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>נוסע</th>
+                        <th>משאלה / יעד</th>
+                        <th style="width: 80px;">מחיקה</th>
+                    </tr>
+                </thead>
+                <tbody id="bucketListTable"></tbody>
+            </table>
+        </div>
+    </div>
 
   </div>
 
+<script>
+let selectedDate = "09.11.26";
+let currentPerson = "יוסף";
+
+// Checklist items for quick tab
+const quickChecklistItems = [
+    "דרכונים בתוקף (לפחות 6 חודשים)",
+    "ביטוח נסיעות (כולל ספורט אתגרי)",
+    "כרטיסי אשראי בינלאומיים + מזומן",
+    "נרתיק אטום למים לטלפון",
+    "בגדי ים וציוד שנורקלינג",
+    "חבילת גלישה / eSIM מותקן",
+    "תרופות ועזרה ראשונה",
+    "מטענים וממתאמי שקע לתאילנד"
+];
+
+let preflightStates = JSON.parse(localStorage.getItem('thailand_checklist_v4')) || {};
+
+// Dynamic schedule storage
+let defaultSchedule = JSON.parse(localStorage.getItem('thailand_schedule_v4')) || {
+    "09.11.26": { title: "הכנות אחרונות ואריזות", events: [] },
+    "10.11.26": { title: "טיסה לפוקט (דרכי אבו דאבי)", events: [{ title: "טיסה EY610 מנתב\"ג ב-06:20 ➔ אבו דאבי ➔ EY414 לפוקט (נחיתה 23:50)", type: "✈️ טיסה", time: "06:20", link: "" }] },
+    "11.11.26": { title: "פוקט - התארגנות ומנוחה", events: [{ title: "צ'ק אין למלון והתרעננות", type: "🏨 מלון", time: "01:00", link: "" }] },
+    "13.11.26": { title: "פוקט - ערב שבת", events: [{ title: "ארוחת שישי בבית חב\"ד פוקט", type: "🍽️ מסעדה", time: "18:30", link: "https://maps.google.com/?q=Chabad+House+Phuket" }] },
+    "22.11.26": { title: "מעבר לבנגקוק", events: [{ title: "טיסת פנים TG206 מפוקט (11:50) לבנגקוק BKK (13:20)", type: "✈️ טיסה", time: "11:50", link: "" }] },
+    "24.11.26": { title: "חזרה לישראל", events: [{ title: "טיסה EY405 מבנגקוק ב-14:40 ➔ אבו דאבי ➔ EY599 לנחיתה בנתב\"ג ב-23:40", type: "✈️ טיסה", time: "14:40", link: "" }] }
+};
+
+// Full Packing Lists
+const defaultPersonalPacking = {
+    "יוסף": ["פספורט", "חולצות קצרות", "מכנסיים קצרים", "תחתונים", "גרביים שחורות", "גרבי ספורט", "כובע קסקט", "מטען לטלפון", "אוזניות בלוטוס", "אוזניות רגילות", "מטען נייד", "כלי רחצה-מברשת ומשחה קיסמים", "נעלי ספורט", "נעלי יציאה", "הווינאס", "גופיות", "גינסים", "לונג", "ספריי הגנה", "נרתיק למשקפי שמש", "מחצלת", "מכופתרות", "תיק צד", "מכונת תספורת", "צבע just", "סכין גילוח", "בושם", "כובע צמר", "אורנג' חול", "חולצות ארוכות", "מגבונים", "שק כביסה", "מכנס מחויט", "חגורה שחורה", "קרדיגן שחור", "וסט שחור", "גקט עור", "מטען לשעון", "מנעול למזוודה", "ערכת טיסה", "עניבה", "דאודורנט", "מכנס לשינה", "מכנס ריצה", "משקפי שמש", "בקבוק מים", "מעיל ארוך מצמר", "כסף-יורו"],
+    "שירן": ["פספורט", "בגד ים", "חולצות קצרות", "מכנסיים קצרים", "תחתונים", "גופיות", "נעלי ספורט", "הווינאס", "מכופתרות", "ספריי הגנה", "משקפי שמש", "חולצה ארוכה / ג'קט", "שק כביסה", "גומיות לשיער", "קרם לשיער", "פלסטרים", "אלוורה", "נובימול", "תחתוניות לשירן", "מחליק שיער שירן", "תיק איפור שירן", "גלולות שירן", "אוזניות", "כלי רחצה"],
+    "אייל": ["פספורט", "בגד ים אייל 2", "מכנסיים קצרים", "חולצות קצרות", "תחתונים", "גרביים לאייל", "מטען לנייד", "לחמניות ולחם לאייל", "טוסטר לאייל", "שניצלים לאייל", "כלי רחצה-מברשת ומשחה", "נעלי ספורט", "הווינאס", "גופיות", "מגבות ים", "ספריי הגנה", "משקפי שמש", "תיק קטן עם משחקים לאייל", "כובע", "פיגמה אייל", "אוזניות"],
+    "שי": ["פספורט", "בגד ים שי 2", "מכנסיים קצרים", "חולצות קצרות", "תחתונים", "גרביים לשי", "מטען לנייד", "כלי רחצה-מברשת ומשחה", "נעלי ספורט", "הווינאס", "גופיות", "מגבות ים", "ספריי הגנה", "משקפי שמש", "תיק קטן עם משחקים לשי", "כובע", "פיגמה שי", "גומיות לשיער", "אוזניות"]
+};
+
+let personalPacking = JSON.parse(localStorage.getItem('thailand_personal_packing_v4')) || defaultPersonalPacking;
+let packingStates = JSON.parse(localStorage.getItem('thailand_packing_states_v4')) || {};
+let expenses = JSON.parse(localStorage.getItem('thailand_expenses_v4')) || [];
+let bucketItems = JSON.parse(localStorage.getItem('thailand_bucket_v4')) || [];
+
+function init() {
+    document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+    renderQuickChecklist();
+    renderDateChips();
+    renderDayContent();
+    renderExpenses();
+    renderPersonalPacking();
+    renderBucket();
+}
+
+function showTab(tabId, btn) {
+    document.querySelectorAll('.section-block').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+}
+
+function renderQuickChecklist() {
+    const container = document.getElementById('quickChecklistGrid');
+    container.innerHTML = '';
+    quickChecklistItems.forEach((item, index) => {
+        const checked = preflightStates[index] ? 'checked' : '';
+        container.innerHTML += `
+            <label class="checklist-item">
+                <input type="checkbox" ${checked} onchange="toggleQuickChecklist(${index})"> 
+                ${item}
+            </label>
+        `;
+    });
+}
+
+function toggleQuickChecklist(index) {
+    preflightStates[index] = !preflightStates[index];
+    localStorage.setItem('thailand_checklist_v4', JSON.stringify(preflightStates));
+}
+
+function renderDateChips() {
+    const container = document.getElementById('dateChips');
+    container.innerHTML = '';
+    for (let d = 9; d <= 24; d++) {
+        const dateStr = (d < 10 ? '0' + d : d) + '.11.26';
+        const chip = document.createElement('div');
+        chip.className = `date-chip ${dateStr === selectedDate ? 'active' : ''}`;
+        chip.innerText = dateStr;
+        chip.onclick = () => {
+            selectedDate = dateStr;
+            renderDateChips();
+            renderDayContent();
+        };
+        container.appendChild(chip);
+    }
+}
+
+function renderDayContent() {
+    const container = document.getElementById('dayContent');
+    const dayData = defaultSchedule[selectedDate] || { title: "יום טיול חופשי", events: [] };
+    
+    let html = `<h3>תאריך: <span style="color:var(--primary-dark)">${selectedDate}</span> - ${dayData.title}</h3>`;
+
+    if (dayData.events.length === 0) {
+        html += `<p style="color:var(--text-muted);">אין אירועים מתוכננים כרגע ליום זה.</p>`;
+    } else {
+        html += `<div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">`;
+        dayData.events.forEach((e, index) => {
+            html += `<div style="background:#fff; border:1px solid var(--border); border-right:4px solid var(--accent); padding:12px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <strong style="color:var(--primary-dark)">[${e.time}] ${e.type}:</strong> ${e.title}
+                    ${e.link ? `<br><a href="${e.link}" target="_blank" style="font-size:0.85rem; color:var(--primary);">📍 מפה</a>` : ''}
+                </div>
+                <button class="btn-danger" onclick="deleteEvent(${index})">מחיקה</button>
+            </div>`;
+        });
+        html += `</div>`;
+    }
+    container.innerHTML = html;
+}
+
+function addCustomEvent() {
+    const title = document.getElementById('eventTitle').value.trim();
+    const type = document.getElementById('eventType').value;
+    const time = document.getElementById('eventTime').value.trim() || 'כל היום';
+    const link = document.getElementById('eventLink').value.trim();
+
+    if (!title) return alert('נא להזין תיאור אירוע');
+
+    if (!defaultSchedule[selectedDate]) {
+        defaultSchedule[selectedDate] = { title: "יום טיול", events: [] };
+    }
+    defaultSchedule[selectedDate].events.push({ title, type, time, link });
+    localStorage.setItem('thailand_schedule_v4', JSON.stringify(defaultSchedule));
+    
+    document.getElementById('eventTitle').value = '';
+    document.getElementById('eventTime').value = '';
+    document.getElementById('eventLink').value = '';
+    renderDayContent();
+}
+
+function deleteEvent(index) {
+    if (confirm('למחוק אירוע זה?')) {
+        defaultSchedule[selectedDate].events.splice(index, 1);
+        localStorage.setItem('thailand_schedule_v4', JSON.stringify(defaultSchedule));
+        renderDayContent();
+    }
+}
+
+function convertCurrency() {
+    const thb = parseFloat(document.getElementById('thbAmount').value) || 0;
+    const rate = parseFloat(document.getElementById('exchangeRate').value) || 9.5;
+    document.getElementById('ilsResult').innerText = (thb / rate).toFixed(2);
+}
+
+function addExpense() {
+    const date = document.getElementById('expDate').value;
+    const desc = document.getElementById('expDesc').value.trim();
+    const cost = parseFloat(document.getElementById('expCost').value);
+    const cat = document.getElementById('expCategory').value;
+    const rate = parseFloat(document.getElementById('exchangeRate').value) || 9.5;
+
+    if (!desc || isNaN(cost)) return alert('נא להזין תיאור וסכום');
+
+    expenses.push({ date, desc, cost, cat, ils: (cost / rate).toFixed(2) });
+    localStorage.setItem('thailand_expenses_v4', JSON.stringify(expenses));
+    document.getElementById('expDesc').value = '';
+    document.getElementById('expCost').value = '';
+    renderExpenses();
+}
+
+function deleteExpense(index) {
+    if (confirm('למחוק הוצאה זו?')) {
+        expenses.splice(index, 1);
+        localStorage.setItem('thailand_expenses_v4', JSON.stringify(expenses));
+        renderExpenses();
+    }
+}
+
+function renderExpenses() {
+    const table = document.getElementById('expensesTable');
+    table.innerHTML = '';
+    let totalTHB = 0;
+    let totalILS = 0;
+
+    expenses.forEach((e, idx) => {
+        totalTHB += e.cost;
+        totalILS += parseFloat(e.ils);
+        table.innerHTML += `<tr>
+            <td>${e.date || '-'}</td>
+            <td>${e.desc}</td>
+            <td>${e.cat}</td>
+            <td>${e.cost.toLocaleString()} THB</td>
+            <td>${e.ils} ₪</td>
+            <td><button class="btn-danger" onclick="deleteExpense(${idx})">מחיקה</button></td>
+        </tr>`;
+    });
+
+    document.getElementById('totalExpensesTHB').innerText = totalTHB.toLocaleString();
+    document.getElementById('totalExpensesILS').innerText = totalILS.toFixed(2);
+}
+
+function switchPerson(person, btn) {
+    currentPerson = person;
+    document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('personTitle').innerText = person;
+    renderPersonalPacking();
+}
+
+function renderPersonalPacking() {
+    const container = document.getElementById('personalPackingContainer');
+    container.innerHTML = '';
+    const items = personalPacking[currentPerson] || [];
+
+    items.forEach((item, index) => {
+        const itemKey = `${currentPerson}_${item}`;
+        const checked = packingStates[itemKey] ? 'checked' : '';
+        container.innerHTML += `<div class="checklist-item" style="justify-content:space-between;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" ${checked} onchange="togglePacking('${itemKey}')"> 
+                ${item}
+            </label>
+            <button class="btn-danger" onclick="deletePackingItem(${index})">🗑️</button>
+        </div>`;
+    });
+}
+
+function togglePacking(key) {
+    packingStates[key] = !packingStates[key];
+    localStorage.setItem('thailand_packing_states_v4', JSON.stringify(packingStates));
+}
+
+function addPackingItem() {
+    const input = document.getElementById('newPackingItem');
+    const val = input.value.trim();
+    if (!val) return;
+    if (!personalPacking[currentPerson]) personalPacking[currentPerson] = [];
+    personalPacking[currentPerson].push(val);
+    localStorage.setItem('thailand_personal_packing_v4', JSON.stringify(personalPacking));
+    input.value = '';
+    renderPersonalPacking();
+}
+
+function deletePackingItem(index) {
+    if (confirm('למחוק פריט זה מהרשימה?')) {
+        personalPacking[currentPerson].splice(index, 1);
+        localStorage.setItem('thailand_personal_packing_v4', JSON.stringify(personalPacking));
+        renderPersonalPacking();
+    }
+}
+
+function addBucketItem() {
+    const person = document.getElementById('bucketPerson').value.trim();
+    const wish = document.getElementById('bucketWish').value.trim();
+    if (!person || !wish) return alert('נא למלא שם ומשאלה');
+
+    bucketItems.push({ person, wish });
+    localStorage.setItem('thailand_bucket_v4', JSON.stringify(bucketItems));
+    document.getElementById('bucketWish').value = '';
+    renderBucket();
+}
+
+function deleteBucketItem(index) {
+    if (confirm('למחוק יעד זה?')) {
+        bucketItems.splice(index, 1);
+        localStorage.setItem('thailand_bucket_v4', JSON.stringify(bucketItems));
+        renderBucket();
+    }
+}
+
+function renderBucket() {
+    const table = document.getElementById('bucketListTable');
+    table.innerHTML = '';
+    bucketItems.forEach((i, idx) => {
+        table.innerHTML += `<tr>
+            <td><strong>${i.person}</strong></td>
+            <td>${i.wish}</td>
+            <td><button class="btn-danger" onclick="deleteBucketItem(${idx})">מחיקה</button></td>
+        </tr>`;
+    });
+}
+
+window.onload = init;
+</script>
 </body>
 </html>
