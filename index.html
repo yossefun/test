@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>חופשה משפחתית בתאילנד | 10–24 בנובמבר</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rubik', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.85), rgba(15, 118, 110, 0.85)), 
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80') center/cover;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    }
+    .hero h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 8px; }
+    .hero p { font-size: 1.1rem; opacity: 0.95; }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--primary-dark);
+      margin: 32px 0 16px 0;
+      border-right: 4px solid var(--primary);
+      padding-right: 10px;
+    }
+
+    /* Table Styling */
+    .table-container { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); }
+    th, td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    th { background: #e0f2fe; color: var(--primary-dark); font-weight: 700; }
+    tr:last-child td { border-bottom: none; }
+
+    /* Timeline Section */
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
+    .timeline-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px 20px;
+      border-right: 4px solid var(--accent);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+    }
+    .timeline-date { font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px; }
+    .timeline-desc { color: var(--text); font-size: 0.95rem; }
+
+    /* Checklist Section */
+    .checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    .checklist-item input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
+
+    /* Footer Section */
+    .footer {
+      background: #1e293b;
+      color: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .footer h3 { font-size: 1.2rem; margin-bottom: 12px; color: #38bdf8; }
+    .footer p { font-size: 0.95rem; color: #cbd5e1; margin-bottom: 6px; }
+    .footer a { color: #38bdf8; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>חופשה משפחתית בתאילנד</h1>
+    <p>פוקט & בנגקוק | 10–24 בנובמבר</p>
+    <div class="badge">תאילנד 2026 🌴</div>
+  </header>
+
+  <div class="container">
+
+    <h2 class="section-title">מידע מהיר ופרטי טיסות</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>נושא</th>
+            <th>פרטים</th>
+            <th>הערות ואישורים</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>טיסת הלוך</strong></td>
+            <td>10/11: המראה מישראל $\rightarrow$ נחיתה בפוקט</td>
+            <td>טיסה ישירה / קונקשן</td>
+          </tr>
+          <tr>
+            <td><strong>טיסת פנים</strong></td>
+            <td>20/11: פוקט (HKT) $\rightarrow$ בנגקוק (BKK)</td>
+            <td>כרטיסים מוזמנים</td>
+          </tr>
+          <tr>
+            <td><strong>טיסת חזור</strong></td>
+            <td>24/11: המראה מבנגקוק $\rightarrow$ נחיתה בישראל</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>לינה בפוקט</strong></td>
+            <td>אתר נופש וספא (10/11 – 20/11)</td>
+            <td>כולל ארוחת בוקר</td>
+          </tr>
+          <tr>
+            <td><strong>לינה בבנגקוק</strong></td>
+            <td>מלון במרכז העיר (20/11 – 24/11)</td>
+            <td>גישה נוחה לרכבת ולשופינג</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">תוכנית הטיול היומית</h2>
+    <div class="timeline">
+      <div class="timeline-card">
+        <div class="timeline-date">10/11 (יום ג') - פוקט</div>
+        <div class="timeline-desc">נחיתה בפוקט, העברה למלון, התארגנות ומנוחה בבריכה, ערב רגוע בשוק לילה מקומי.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">11/11 (יום ד') - יום חוף וספורט ימי</div>
+        <div class="timeline-desc">אופנועי ים, מצנח רחיפה וסיור ערב באזור הפטונג.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">12/11 (יום ה') - שייט לאיי פיפי</div>
+        <div class="timeline-desc">שייט יום שלם כולל שנורקלינג, ארוחת צהריים באי וביקור במערת הוויקינגים.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">13/11 (יום ו') - אקסטרים בטבע</div>
+        <div class="timeline-desc">טיול טרקטורונים (ATV) ופארק אומגות (Zipline) בג'ונגל.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">14/11 (יום ש') - שמורת פילים ومפלים</div>
+        <div class="timeline-desc">ביקור בשמורת פילים אקולוגית (ללא רכיבה) ושחייה במפלים.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">15/11–19/11 - ימי נופש ואטרקציות</div>
+        <div class="timeline-desc">שילוב בין ימי מנוחה בים, פארק המים Andamanda, שייט לאי ג'יימס בונד ושופינג ב-Central Phuket.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">20/11 (יום ו') - מגיעים לבנגקוק</div>
+        <div class="timeline-desc">טיסת פנים לבנגקוק, צ'ק-אין במלון, יציאה לבר רופטופ לתצפית שקיעה על העיר.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">21/11 (יום ש') - שווקים ונהר</div>
+        <div class="timeline-desc">שוק סוף השבוע Chatuchak ושייט בסירת ארוכת-זנב בנהר צ'או פראיה.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">22/11 (יום א') - יום שופינג מרכזי</div>
+        <div class="timeline-desc">מתחמי קניות ממוזגים: MBK, Siam Paragon ומתחם ICONSIAM.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">23/11 (יום ב') - תרבות ולילה</div>
+        <div class="timeline-desc">ארמון המלך, מקדש וואט פו, וסיור ערב בשוק הלילה Jodd Fairs.</div>
+      </div>
+      <div class="timeline-card">
+        <div class="timeline-date">24/11 (יום ג') - חזרה הביתה</div>
+        <div class="timeline-desc">אריזות, קניות אחרונות, פינוי המלון והעברה לשדה התעופה לטיסה לישראל.</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">ציוד וארגון מוקדם</h2>
+    <div class="checklist-grid">
+      <label class="checklist-item"><input type="checkbox"> דרכונים בתוקף (לפחות 6 חודשים)</label>
+      <label class="checklist-item"><input type="checkbox"> ביטוח נסיעות (כולל ספורט אתגרי)</label>
+      <label class="checklist-item"><input type="checkbox"> כרטיסי אשראי בינלאומיים + מזומן</label>
+      <label class="checklist-item"><input type="checkbox"> נרתיק אטום למים לטלפון</label>
+      <label class="checklist-item"><input type="checkbox"> בגדי ים וציוד שנורקלינג</label>
+      <label class="checklist-item"><input type="checkbox"> חבילת גלישה / eSIM מותקן</label>
+    </div>
+
+    <footer class="footer">
+      <h3>אנשי קשר וקישורים חיוניים</h3>
+      <p><strong>שגרירות ישראל בבנגקוק:</strong> <a href="tel:+6622049200">+66-2-2049200</a></p>
+      <p><strong>מוקד חרם / ביטוח:</strong> מופיע בפוליסת הביטוח</p>
+      <p><a href="#">פתחי אלבום תמונות משותף ב-Google Photos</a></p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
