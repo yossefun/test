@@ -1,431 +1,868 @@
-import React, { useState, useEffect } from 'react';
-import { User, BookOpen, Save, Calendar, CheckSquare, MapPin, Plus, Trash2, Clock } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>חופשה משפחתית בתאילנד 2026 | משפחת אבוחצירא</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-dark: #0369a1;
+      --accent: #f59e0b;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --danger: #ef4444;
+    }
 
-const TRAVELERS = ['יוסי', 'שירן', 'אייל', 'שי', 'משותף'];
-const ONLY_PEOPLE = ['יוסי', 'שירן', 'אייל', 'שי'];
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Rubik', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding-bottom: 60px; direction: rtl; }
 
-// 1 & 2. רשימות ציוד מעודכנות לפי התמונות (כולל הטאב המשותף)
-const INITIAL_PACKING_LISTS = {
-  'משותף': [
-    'ביטוח חול', 'נובימול', 'חבילת גלישה', 'ספריי הגנה', 'פלסטרים',
-    'אלוורה', 'אופטלגין', 'סלספט', 'לחם לליג', 'טוסטר לאייל'
-  ],
-  'שי': [
-    'פספורט', 'בגדים', 'מכנסיים קצרים', 'חולצות קצרות', 'גופיות', 'פיג׳מה',
-    'תחתונים', 'גרביים', 'נעלי ספורט', 'כפכפים', 'מברשת שיניים', 'תחתוניות / פדים',
-    'ספריי הגנה', 'משקפי שמש', 'תיק איפור', 'מסרק', 'גומיות לשיער', 'תיק גב',
-    'כובע', 'אוזניות', 'מטען לנייד', 'מטען נייד'
-  ],
-  'אייל': [
-    'פספורט', 'בגדים', 'מכנסיים קצרים', 'חולצות קצרות', 'גופיות', 'פיג׳מה',
-    'תחתונים', 'גרביים', 'נעלי ספורט', 'כפכפים', 'מברשת שיניים', 'דאודורנט',
-    'תיק גב', 'מטען לנייד', 'משקפי שמש', 'כובע', 'אוזניות', 'מטען נייד'
-  ],
-  'שירן': [
-    'פספורט', 'בגד יום', 'חולצות קצרות', 'מכנסיים קצרים', 'תחתונים', 'גופיות',
-    'נעל ספורט', 'כפכפים', 'משקפי שמש', 'חולצה ארוכה / ג׳קט', 'שק כביסה',
-    'גומיות לשיער', 'קרם לשיער', 'תחתוניות / פדים', 'מחליק שיער', 'תיק איפור',
-    'כלי רחצה', 'גלולות', 'תיק גב', 'אוזניות', 'כובע'
-  ],
-  'יוסי': [
-    'פספורט', 'חולצות קצרות', 'מכנסיים קצרים', 'תחתונים', 'גרביים שחורות',
-    'גרבי ספורט', 'כובע טמבל', 'מטען לשעון', 'אוזניות בלוטות', 'מטען נייד',
-    'מבחר שרשראות/צמיגים', 'נעלי ספורט', 'כפכפים', 'גופיות', 'ג׳ינסים', 'לפג',
-    'נרתיק למשקפי שמש', 'משקפיים', 'תיק גב', 'מכונת תספורת', 'כובע מצחיה',
-    'סכין גילוח+ג׳ל', 'בושם', 'חולצות ארוכות', 'מגבונים', 'שק כביסה', 'מטען לפלאפון',
-    'מגש למסעדת', 'ערכת עזרה', 'דאודורנט', 'מכנס לשינה', 'משקפי אלטר', 'בקבוק מים',
-    'דולרים', 'באטים', 'מטען נייד'
-  ]
-};
+    /* Device User Bar */
+    .user-banner {
+      background: #0f172a;
+      color: white;
+      padding: 8px 15px;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .user-banner button { background: var(--accent); border: none; padding: 4px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; width: auto; margin: 0; font-size: 0.85rem; color: #000; }
 
-const DAYS = ['יום 1', 'יום 2', 'יום 3', 'יום 4', 'יום 5', 'יום 6', 'יום 7'];
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.85), rgba(15, 118, 110, 0.85)), 
+                  url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80') center/cover;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 24px;
+    }
+    .hero h1 { font-size: 2.3rem; font-weight: 700; margin-bottom: 8px; }
+    .hero p { font-size: 1.1rem; opacity: 0.95; }
+    .badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
 
-export default function TravelApp() {
-  const [activeMainTab, setActiveMainTab] = useState('itinerary'); // 'itinerary' | 'packing'
+    .container { max-width: 950px; margin: 0 auto; padding: 0 15px; }
 
-  // 4. בחירת זהות משתמש נכנס שמוזכרת ונשמרת במכשיר
-  const [currentUser, setCurrentUser] = useState(() => {
-    return localStorage.getItem('travel_current_user') || 'יוסי';
-  });
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--border);
+    }
 
-  // ניהול ימים ואירועים בלו"ז
-  const [selectedDay, setSelectedDay] = useState('יום 1');
-  const [events, setEvents] = useState(() => {
-    const saved = localStorage.getItem('travel_events');
-    return saved ? JSON.parse(saved) : {};
-  });
+    .tab-btn {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 20px;
+      border-radius: 12px 12px 0 0;
+      cursor: pointer;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
 
-  // טופס אירוע חדש
-  const [newEventDesc, setNewEventDesc] = useState('');
-  const [newEventCategory, setNewEventCategory] = useState('טיסה ✈️');
-  const [newEventTime, setNewEventTime] = useState('');
-  const [newEventMap, setNewEventMap] = useState('');
+    .tab-btn:hover { background: #f1f5f9; color: var(--text); }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); font-weight: 700; }
 
-  // ניהול רשימת ציוד
-  const [activePackingTab, setActivePackingTab] = useState('משותף');
-  const [packingLists, setPackingLists] = useState(() => {
-    const saved = localStorage.getItem('travel_packing_lists');
-    return saved ? JSON.parse(saved) : INITIAL_PACKING_LISTS;
-  });
-  const [newPackingItem, setNewPackingItem] = useState('');
+    .sub-tab-btn { background: #e0f2fe; border: 1px solid var(--primary); color: var(--primary-dark); padding: 6px 14px; border-radius: 15px; cursor: pointer; font-weight: bold; margin-left: 5px; margin-bottom: 8px; }
+    .sub-tab-btn.active { background: var(--primary); color: white; }
 
-  // 3. יומן מסע לכל יום
-  const [journalEntries, setJournalEntries] = useState(() => {
-    const saved = localStorage.getItem('travel_journal');
-    return saved ? JSON.parse(saved) : {};
-  });
-  const [newLogText, setNewLogText] = useState('');
+    .section-block { display: none; background: var(--card); padding: 24px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 20px; border: 1px solid var(--border); }
+    .section-block.active { display: block; }
 
-  // שמירה אוטומטית ב-LocalStorage
-  useEffect(() => {
-    localStorage.setItem('travel_current_user', currentUser);
-  }, [currentUser]);
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--primary-dark);
+      margin: 24px 0 16px 0;
+      border-right: 4px solid var(--primary);
+      padding-right: 10px;
+    }
 
-  useEffect(() => {
-    localStorage.setItem('travel_events', JSON.stringify(events));
-  }, [events]);
+    /* Table Styling */
+    .table-container { overflow-x: auto; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 24px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; background: var(--card); }
+    th, td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    th { background: #e0f2fe; color: var(--primary-dark); font-weight: 700; white-space: nowrap; }
+    tr:last-child td { border-bottom: none; }
 
-  useEffect(() => {
-    localStorage.setItem('travel_packing_lists', JSON.stringify(packingLists));
-  }, [packingLists]);
+    /* Timeline Section */
+    .timeline { display: flex; flex-direction: column; gap: 12px; }
+    .timeline-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px 20px;
+      border-right: 4px solid var(--accent);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      border: 1px solid var(--border);
+    }
 
-  useEffect(() => {
-    localStorage.setItem('travel_journal', JSON.stringify(journalEntries));
-  }, [journalEntries]);
+    /* Checklist Section */
+    .checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+    .checklist-item input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
-  // פונקציות הוספה/מחיקת אירועים בלו"ז
-  const handleAddEvent = () => {
-    if (!newEventDesc.trim()) return;
-    const dayEvents = events[selectedDay] || [];
-    const newEvent = {
-      id: Date.now(),
-      description: newEventDesc.trim(),
-      category: newEventCategory,
-      time: newEventTime.trim(),
-      mapLink: newEventMap.trim()
-    };
-    setEvents({ ...events, [selectedDay]: [...dayEvents, newEvent] });
-    setNewEventDesc('');
-    setNewEventTime('');
-    setNewEventMap('');
-  };
+    /* Form Elements & Buttons */
+    .flex-grid { display: flex; gap: 15px; flex-wrap: wrap; }
+    .card-box { flex: 1; min-width: 280px; background: #f8fafc; padding: 18px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 15px; }
+    input, select, textarea, button { width: 100%; padding: 10px 14px; margin-top: 6px; margin-bottom: 12px; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 0.95rem; }
+    button.btn-main { background: var(--primary); color: white; font-weight: bold; border: none; cursor: pointer; transition: 0.2s; }
+    button.btn-main:hover { background: var(--primary-dark); }
+    .btn-danger { background: var(--danger); color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; width: auto; font-size: 0.85rem; }
+    .btn-move { background: #e0f2fe; border: 1px solid var(--border); color: var(--primary-dark); padding: 4px 8px; border-radius: 6px; cursor: pointer; width: auto; font-size: 0.85rem; transition: 0.2s; }
+    .btn-move:hover:not(:disabled) { background: var(--primary); color: white; }
 
-  const handleDeleteEvent = (id) => {
-    const dayEvents = (events[selectedDay] || []).filter(e => e.id !== id);
-    setEvents({ ...events, [selectedDay]: dayEvents });
-  };
+    .date-selector { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 12px; margin-bottom: 15px; }
+    .date-chip { padding: 8px 14px; background: #e0f2fe; color: var(--primary-dark); border-radius: 20px; cursor: pointer; font-size: 0.9rem; white-space: nowrap; font-weight: 500; }
+    .date-chip.active { background: var(--primary); color: white; font-weight: bold; }
 
-  // פונקציות ציוד
-  const handleAddPackingItem = () => {
-    if (!newPackingItem.trim()) return;
-    setPackingLists({
-      ...packingLists,
-      [activePackingTab]: [...(packingLists[activePackingTab] || []), newPackingItem.trim()]
-    });
-    setNewPackingItem('');
-  };
+    /* Modal for User Selection */
+    #userModal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; z-index: 1000;
+    }
+    .modal-content {
+      background: white; padding: 30px; border-radius: 16px; text-align: center; max-width: 400px; width: 90%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .modal-content h2 { color: var(--primary-dark); margin-bottom: 15px; }
+    .user-select-btn {
+      display: block; width: 100%; padding: 12px; margin: 10px 0; background: #e0f2fe; color: var(--primary-dark);
+      border: 1px solid var(--primary); border-radius: 10px; font-weight: bold; font-size: 1.05rem; cursor: pointer; transition: 0.2s;
+    }
+    .user-select-btn:hover { background: var(--primary); color: white; }
 
-  const handleDeletePackingItem = (index) => {
-    const list = [...packingLists[activePackingTab]];
-    list.splice(index, 1);
-    setPackingLists({ ...packingLists, [activePackingTab]: list });
-  };
+    /* Footer Section */
+    .footer {
+      background: #1e293b;
+      color: white;
+      border-radius: 16px;
+      padding: 24px;
+      margin-top: 40px;
+      text-align: center;
+    }
+    .footer h3 { font-size: 1.2rem; margin-bottom: 12px; color: #38bdf8; }
+    .footer p { font-size: 0.95rem; color: #cbd5e1; margin-bottom: 6px; }
+    .footer a { color: #38bdf8; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
 
-  // 3. הוספת תיאור ליומן מסע
-  const handleAddJournalEntry = () => {
-    if (!newLogText.trim()) return;
-    const dayLogs = journalEntries[selectedDay] || [];
-    const entry = {
-      id: Date.now(),
-      author: currentUser,
-      text: newLogText.trim(),
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    };
-    setJournalEntries({
-      ...journalEntries,
-      [selectedDay]: [...dayLogs, entry]
-    });
-    setNewLogText('');
-  };
+  <!-- Device User Banner -->
+  <div class="user-banner">
+    <div>👤 מכשיר זה מזוהה עבור: <strong id="currentDeviceUserLabel">לא הוגדר</strong></div>
+    <button onclick="openUserModal()">החלף משתמש במכשיר</button>
+  </div>
 
-  return (
-    <div style={{ maxWidth: '480px', margin: '0 auto', fontFamily: 'system-ui, -apple-system, sans-serif', direction: 'rtl', padding: '16px', backgroundColor: '#f8fafc', minHeight: '100vh', boxSizing: 'border-box' }}>
-      
-      {/* 4. בחירת זהות משתמש בראש האתר (נזכר לפי המכשיר) */}
-      <div style={{ backgroundColor: '#fff', padding: '12px 16px', borderRadius: '12px', marginBottom: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <User size={18} color="#2563eb" />
-          <span style={{ fontWeight: 'bold', fontSize: '14px', color: '#1e293b' }}>מי אתה?</span>
+  <!-- User Selection Modal -->
+  <div id="userModal" style="display:none;">
+    <div class="modal-content">
+      <h2>מי משתמש במכשיר זה?</h2>
+      <p style="margin-bottom: 15px; color: var(--text-muted);">בחירה זו תישמר במכשיר שלך ותשמש לחתימה ביומן המסע ולניהול הציוד.</p>
+      <button class="user-select-btn" onclick="setDeviceUser('יוסף')">👨 יוסף</button>
+      <button class="user-select-btn" onclick="setDeviceUser('שירן')">👩 שירן</button>
+      <button class="user-select-btn" onclick="setDeviceUser('אייל')">👦 אייל (16)</button>
+      <button class="user-select-btn" onclick="setDeviceUser('שי')">👧 שי (14)</button>
+    </div>
+  </div>
+
+  <!-- Header / Hero Section -->
+  <header class="hero">
+    <h1>חופשה משפחתית בתאילנד</h1>
+    <p>יוסף, שירן, אייל (16) ושי (14) | פוקט & בנגקוק | 10–24 בנובמבר</p>
+    <div class="badge">תאילנד 2026 🌴</div>
+  </header>
+
+  <div class="container">
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="showTab('quick-info', this)">📌 מידע מהיר</button>
+        <button class="tab-btn" onclick="showTab('itinerary', this)">📅 לוח זמנים יומי ויומן מסע</button>
+        <button class="tab-btn" onclick="showTab('expenses', this)">💰 הוצאות וקבליות</button>
+        <button class="tab-btn" onclick="showTab('packing', this)">🧳 רשימות ציוד</button>
+        <button class="tab-btn" onclick="showTab('bucket', this)">⭐ יעדים חייבים</button>
+    </div>
+
+    <!-- 0. QUICK INFO TAB -->
+    <div id="quick-info" class="section-block active" style="padding:0; background:transparent; border:none; box-shadow:none;">
+        
+        <h2 class="section-title" style="margin-top:0;">מידע מהיר ופרטי טיסות</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>נושא</th>
+                <th>פרטים</th>
+                <th>הערות ואישורים</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>טיסת הלוך</strong></td>
+                <td>10/11: המראה 06:20 מנתב"ג ➔ אבו דאבי (EY610) ➔ פוקט (EY414)</td>
+                <td>נחיתה בפוקט ב-23:50 | Etihad Airways</td>
+              </tr>
+              <tr>
+                <td><strong>טיסת פנים</strong></td>
+                <td>22/11: פוקט (HKT) ➔ בנגקוק (BKK)</td>
+                <td>המראה 11:50, נחיתה 13:20 | טיסה TG206</td>
+              </tr>
+              <tr>
+                <td><strong>טיסת חזור</strong></td>
+                <td>24/11: המראה 14:40 מבנגקוק (EY405) ➔ אבו דאבי ➔ נתב"ג (EY599)</td>
+                <td>נחיתה בישראל ב-23:40 | Etihad Airways</td>
+              </tr>
+              <tr>
+                <td><strong>לינה בפוקט</strong></td>
+                <td>מלון / אתר נופש בפוקט (10/11 – 22/11)</td>
+                <td>12 לילות | כולל ארוחת בוקר</td>
+              </tr>
+              <tr>
+                <td><strong>לינה בבנגקוק</strong></td>
+                <td>מלון במרכז העיר בנגקוק (22/11 – 24/11)</td>
+                <td>2 לילות | גישה נוחה לרכבת ולשופינג</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <select 
-          value={currentUser} 
-          onChange={(e) => setCurrentUser(e.target.value)}
-          style={{ padding: '6px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', backgroundColor: '#f1f5f9', fontWeight: 'bold', color: '#0f172a', outline: 'none' }}
-        >
-          {ONLY_PEOPLE.map(person => (
-            <option key={person} value={person}>{person}</option>
-          ))}
-        </select>
-      </div>
 
-      {/* תפריט ניווט ראשי: לו"ז מסע / רשימת ציוד */}
-      <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-        <button
-          onClick={() => setActiveMainTab('itinerary')}
-          style={{
-            flex: 1,
-            padding: '12px',
-            borderRadius: '12px',
-            border: 'none',
-            backgroundColor: activeMainTab === 'itinerary' ? '#2563eb' : '#fff',
-            color: activeMainTab === 'itinerary' ? '#fff' : '#64748b',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-            cursor: 'pointer'
-          }}
-        >
-          <Calendar size={18} /> לו"ז מסע
-        </button>
-        <button
-          onClick={() => setActiveMainTab('packing')}
-          style={{
-            flex: 1,
-            padding: '12px',
-            borderRadius: '12px',
-            border: 'none',
-            backgroundColor: activeMainTab === 'packing' ? '#2563eb' : '#fff',
-            color: activeMainTab === 'packing' ? '#fff' : '#64748b',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '8px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
-            cursor: 'pointer'
-          }}
-        >
-          <CheckSquare size={18} /> רשימת ציוד
-        </button>
-      </div>
-
-      {/* -------------------- תצוגת לו"ז מסע ויומן -------------------- */}
-      {activeMainTab === 'itinerary' && (
-        <>
-          {/* סרגל ימים */}
-          <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '8px', marginBottom: '16px' }}>
-            {DAYS.map(day => (
-              <button
-                key={day}
-                onClick={() => setSelectedDay(day)}
-                style={{
-                  padding: '8px 14px',
-                  borderRadius: '20px',
-                  border: 'none',
-                  backgroundColor: selectedDay === day ? '#0284c7' : '#fff',
-                  color: selectedDay === day ? '#fff' : '#475569',
-                  fontWeight: 'bold',
-                  fontSize: '13px',
-                  whiteSpace: 'nowrap',
-                  cursor: 'pointer',
-                  boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-                }}
-              >
-                {day}
-              </button>
-            ))}
+        <h2 class="section-title">תוכנית הטיול היומית</h2>
+        <div class="timeline">
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">10/11 (יום ג') - טיסה ונחיתה בפוקט</div>
+            <div style="color: var(--text); font-size: 0.95rem;">המראה מנתב"ג ב-06:20 (טיסה EY610), קונקשן באבו דאבי והמשך לפוקט (EY414). נחיתה ב-23:50, העברה למלון וצ'ק-אין.</div>
           </div>
-
-          {/* אירועי היום הנבחר */}
-          <div style={{ backgroundColor: '#fff', padding: '16px', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)', marginBottom: '16px' }}>
-            <h3 style={{ fontSize: '16px', fontWeight: 'bold', color: '#0f172a', marginBottom: '12px' }}>
-              אירועים ל{selectedDay}
-            </h3>
-
-            {(!events[selectedDay] || events[selectedDay].length === 0) ? (
-              <p style={{ fontSize: '13px', color: '#94a3b8', textAlign: 'center', margin: '16px 0' }}>אין אירועים מתוכננים עדיין ליום זה</p>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '16px' }}>
-                {events[selectedDay].map(item => (
-                  <div key={item.id} style={{ padding: '12px', border: '1px solid #e2e8f0', borderRadius: '10px', backgroundColor: '#f8fafc', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                        <span style={{ fontSize: '12px', backgroundColor: '#e0f2fe', color: '#0369a1', padding: '2px 8px', borderRadius: '6px', fontWeight: 'bold' }}>{item.category}</span>
-                        {item.time && <span style={{ fontSize: '12px', color: '#64748b', display: 'flex', alignItems: 'center', gap: '2px' }}><Clock size={12} /> {item.time}</span>}
-                      </div>
-                      <p style={{ fontSize: '14px', fontWeight: 'bold', color: '#1e293b', margin: '4px 0' }}>{item.description}</p>
-                      {item.mapLink && (
-                        <a href={item.mapLink} target="_blank" rel="noreferrer" style={{ fontSize: '12px', color: '#2563eb', display: 'flex', alignItems: 'center', gap: '3px', textDecoration: 'none', marginTop: '4px' }}>
-                          <MapPin size={12} /> קישור למפה
-                        </a>
-                      )}
-                    </div>
-                    <button onClick={() => handleDeleteEvent(item.id)} style={{ border: 'none', background: 'none', color: '#ef4444', cursor: 'pointer', padding: '4px' }}>
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* טופס הוספת אירוע ליום הנבחר */}
-            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 'bold', color: '#334155' }}>הוספת אירוע ליום הנבחר</span>
-              <input
-                type="text"
-                placeholder="תיאור האירוע"
-                value={newEventDesc}
-                onChange={(e) => setNewEventDesc(e.target.value)}
-                style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }}
-              />
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <select
-                  value={newEventCategory}
-                  onChange={(e) => setNewEventCategory(e.target.value)}
-                  style={{ flex: 1, padding: '8px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }}
-                >
-                  <option value="טיסה ✈️">טיסה ✈️</option>
-                  <option value="מלון 🏨">מלון 🏨</option>
-                  <option value="אטרקציה 🎡">אטרקציה 🎡</option>
-                  <option value="אוכל 🍽️">אוכל 🍽️</option>
-                  <option value="נסיעה 🚗">נסיעה 🚗</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="שעה (למשל 14:30)"
-                  value={newEventTime}
-                  onChange={(e) => setNewEventTime(e.target.value)}
-                  style={{ flex: 1, padding: '8px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }}
-                />
-              </div>
-              <input
-                type="text"
-                placeholder="קישור למפה (לא חובה)"
-                value={newEventMap}
-                onChange={(e) => setNewEventMap(e.target.value)}
-                style={{ padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }}
-              />
-              <button
-                onClick={handleAddEvent}
-                style={{ padding: '10px', backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: 'bold', color: '#1e293b', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-              >
-                <Plus size={16} /> הוסף אירוע ליום זה
-              </button>
-            </div>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">11/11 (יום ד') - פוקט: התארגנות, מנוחה וים</div>
+            <div style="color: var(--text); font-size: 0.95rem;">התאוששות מהטיסה, מנוחה בבריכה/בחוף, התארגנות ראשונית וסיור ערב רגוע בסביבת המלון.</div>
           </div>
-
-          {/* 3. יומן מסע (כפי שמופיע בתמונה שצורפה) */}
-          <div style={{ backgroundColor: '#fff', padding: '16px', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-              <BookOpen size={18} color="#0284c7" />
-              <h3 style={{ fontSize: '16px', fontWeight: 'bold', color: '#0f172a', margin: 0 }}>יומן המסע ל{selectedDay}</h3>
-            </div>
-
-            {/* רשימת תיאורים שכבר נרשמו */}
-            <div style={{ marginBottom: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {(!journalEntries[selectedDay] || journalEntries[selectedDay].length === 0) ? (
-                <p style={{ fontSize: '12px', color: '#94a3b8', textAlign: 'center', fontStyle: 'italic', margin: '8px 0' }}>טרם נרשמו חוויות ליום זה...</p>
-              ) : (
-                journalEntries[selectedDay].map(entry => (
-                  <div key={entry.id} style={{ backgroundColor: '#f8fafc', padding: '10px', borderRadius: '8px', borderRight: '3px solid #2563eb' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#64748b', marginBottom: '4px' }}>
-                      <span style={{ fontWeight: 'bold', color: '#0f172a' }}>{entry.author}</span>
-                      <span>{entry.time}</span>
-                    </div>
-                    <p style={{ fontSize: '13px', color: '#334155', margin: 0 }}>{entry.text}</p>
-                  </div>
-                ))
-              )}
-            </div>
-
-            {/* שדה הכתיבה ליומן היומי */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <textarea
-                rows="3"
-                placeholder={`איך היה היום... (יירשם בשם ${currentUser})`}
-                value={newLogText}
-                onChange={(e) => setNewLogText(e.target.value)}
-                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', resize: 'none', fontSize: '13px', boxSizing: 'border-box' }}
-              />
-              <button
-                onClick={handleAddJournalEntry}
-                style={{ padding: '8px 16px', backgroundColor: '#0284c7', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
-              >
-                <Save size={16} /> הוסף ליומן
-              </button>
-            </div>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">12/11 (יום ה') - יום חוף, אטרקציות ימיות וספורט ימי</div>
+            <div style="color: var(--text); font-size: 0.95rem;">אופנועי ים, מצנח רחיפה, בילוי בחוף וסיור ערב באזור הפטונג ושוק הלילה.</div>
           </div>
-        </>
-      )}
-
-      {/* -------------------- תצוגת רשימת ציוד -------------------- */}
-      {activeMainTab === 'packing' && (
-        <div style={{ backgroundColor: '#fff', padding: '16px', borderRadius: '16px', boxShadow: '0 1px 3px rgba(0,0,0,0.08)' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 'bold', color: '#0284c7', marginBottom: '12px', borderRight: '4px solid #0284c7', paddingRight: '8px' }}>
-            רשימת ציוד אישית לפי נוסע
-          </h2>
-
-          {/* 1. טאבים לרשימת הציוד (כולל טאב משותף) */}
-          <div style={{ display: 'flex', gap: '6px', marginBottom: '16px', overflowX: 'auto', paddingBottom: '4px' }}>
-            {TRAVELERS.map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActivePackingTab(tab)}
-                style={{
-                  flex: 1,
-                  padding: '8px 4px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  backgroundColor: activePackingTab === tab ? '#0284c7' : '#f1f5f9',
-                  color: activePackingTab === tab ? '#fff' : '#475569',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {tab}
-              </button>
-            ))}
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">13/11 (יום ו') - ערב שבת בפוקט</div>
+            <div style="color: var(--text); font-size: 0.95rem;">הכנות לשבת, טיול קל באזור, וארוחת ליל שבת חגיגית בבית חב"ד פוקט (18:30).</div>
           </div>
-
-          {/* הוספת פריט ציוד */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
-            <input
-              type="text"
-              placeholder="שם הפריט להוספה"
-              value={newPackingItem}
-              onChange={(e) => setNewPackingItem(e.target.value)}
-              style={{ flex: 1, padding: '8px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '13px' }}
-            />
-            <button 
-              onClick={handleAddPackingItem}
-              style={{ padding: '8px 16px', backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: 'bold', cursor: 'pointer', fontSize: '13px' }}
-            >
-              הוסף פריט
-            </button>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">14/11 (יום ש') - שבת מנוחה בפוקט</div>
+            <div style="color: var(--text); font-size: 0.95rem;">יום מנוחה משפחתי, בילוי רגוע במלון ובחוף הים, יציאה במוצ"ש לטיול ערב.</div>
           </div>
-
-          {/* 2. רשימת הפריטים לפי הנוסע/משותף */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '400px', overflowY: 'auto' }}>
-            {(packingLists[activePackingTab] || []).map((item, index) => (
-              <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', border: '1px solid #e2e8f0', borderRadius: '10px', backgroundColor: '#fff' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <input type="checkbox" style={{ width: '18px', height: '18px', cursor: 'pointer' }} />
-                  <span style={{ fontSize: '14px', color: '#334155' }}>{item}</span>
-                </div>
-                <button onClick={() => handleDeletePackingItem(index)} style={{ padding: '4px 8px', border: '1px solid #cbd5e1', borderRadius: '6px', backgroundColor: '#fff', fontSize: '11px', cursor: 'pointer', color: '#64748b' }}>
-                  מחק
-                </button>
-              </div>
-            ))}
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">15/11–19/11 - פוקט: אטרקציות, שייט ואקסטרים</div>
+            <div style="color: var(--text); font-size: 0.95rem;">שילוב ימים: שייט לאיי פיפי ושנורקלינג, פארק המים Andamanda, טיול טרקטורונים (ATV) בג'ונגל, ביקור בשמורת פילים ושופינג ב-Central Phuket.</div>
+          </div>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">20/11–21/11 - פוקט: נופש, ספורט ימי וסוף שבוע</div>
+            <div style="color: var(--text); font-size: 0.95rem;">ימי נופש נוספים, בילוי בחוף, עיסויים תאילנדיים, קניות אחרונות בפוקט והיערכות למעבר לבנגקוק.</div>
+          </div>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">22/11 (יום א') - מעבר לבנגקוק</div>
+            <div style="color: var(--text); font-size: 0.95rem;">צ'ק-אאוט בפוקט, טיסת פנים TG206 לבנגקוק (11:50 ➔ 13:20). צ'ק-אין במלון בבנגקוק, יציאה לבר רופטופ לתצפית שקיעה.</div>
+          </div>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">23/11 (יום ב') - בנגקוק: יום שופינג מרכזי ותרבות</div>
+            <div style="color: var(--text); font-size: 0.95rem;">מתחמי קניות ממוזגים: MBK, Siam Paragon ומתחם ICONSIAM על הנהר. סיור ערב בשוק הלילה Jodd Fairs.</div>
+          </div>
+          <div class="timeline-card">
+            <div style="font-weight: 700; color: var(--primary-dark); font-size: 0.95rem; margin-bottom: 4px;">24/11 (יום ג') - חזרה לישראל</div>
+            <div style="color: var(--text); font-size: 0.95rem;">אריזות, קניות אחרונות, פינוי המלון והעברה לשדה התעופה BKK. טיסה EY405 ב-14:40 ➔ אבו דאבי ➔ EY599 לנחיתה בנתב"ג ב-23:40.</div>
           </div>
         </div>
-      )}
+
+        <h2 class="section-title">ציוד וארגון מוקדם</h2>
+        <div class="checklist-grid" id="quickChecklistGrid"></div>
+
+        <footer class="footer">
+          <h3>אנשי קשר וקישורים חיוניים</h3>
+          <p><strong>שגרירות ישראל בבנגקוק:</strong> <a href="tel:+6622049200">+66-2-2049200</a></p>
+          <p><strong>משטרת התיירות בתאילנד:</strong> <a href="tel:1155">1155</a> | <strong>אמבולנס:</strong> <a href="tel:1669">1669</a></p>
+          <p><strong>בית חב"ד פוקט:</strong> <a href="https://maps.google.com/?q=Chabad+House+Phuket" target="_blank">ניווט ב-Google Maps</a></p>
+        </footer>
 
     </div>
-  );
+
+    <!-- 1. ITINERARY & JOURNAL TAB -->
+    <div id="itinerary" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">📅 לוח זמנים יומי ויומן מסע (09.11.26 - 24.11.26)</h2>
+        <div class="date-selector" id="dateChips"></div>
+
+        <div id="dayContent" class="card-box" style="margin-bottom: 20px;"></div>
+
+        <!-- Daily Journal Section -->
+        <div class="card-box" style="background: #f0fdf4; border-color: #bbf7d0; margin-bottom: 20px;">
+            <h3 style="color: #166534; margin-bottom: 10px;">📖 יומן המסע היומי שלי</h3>
+            <label style="font-size: 0.9rem; color: #166534;">כתיבת רשמים ליום זה (פורסם על ידי: <strong id="journalAuthorDisplay">משתמש</strong>):</label>
+            <textarea id="journalText" placeholder="איך היה היום... סיפורים, חוויות ותמונות מהשטח" rows="3"></textarea>
+            <button class="btn-main" style="background: #16a34a;" onclick="addJournalEntry()">הוסף רשמים ליומן המסע</button>
+            
+            <div id="journalEntriesList" style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+
+        <div class="card-box" style="background: var(--card);">
+            <h3>➕ הוספת אירוע / תזכורת ליום הנבחר</h3>
+            <div class="flex-grid">
+                <div style="flex:1;">
+                    <input type="text" id="eventTitle" placeholder="תיאור האירוע">
+                    <select id="eventType">
+                        <option value="✈️ טיסה">✈️ טיסה</option>
+                        <option value="🏨 מלון">🏨 מלון</option>
+                        <option value="🎡 אטרקציה">🎡 אטרקציה</option>
+                        <option value="🍽️ מסעדה">🍽️ מסעדה</option>
+                        <option value="📝 תזכורת">📝 משימה / תזכורת</option>
+                    </select>
+                </div>
+                <div style="flex:1;">
+                    <input type="text" id="eventTime" placeholder="שעה (לדוגמה: 14:30)">
+                    <input type="text" id="eventLink" placeholder="קישור למיקום / מפה (רשות)">
+                    <button class="btn-main" onclick="addCustomEvent()">הוסף אירוע ליום זה</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. EXPENSES TAB -->
+    <div id="expenses" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">💰 מחשבון המרה ומעקב הוצאות</h2>
+        <div class="flex-grid">
+            <div class="card-box">
+                <h3>💱 מחשבון המרה (THB ➔ ILS)</h3>
+                <label>סכום בבאט (THB):</label>
+                <input type="number" id="thbAmount" placeholder="0" oninput="convertCurrency()">
+                <label>שער חליפין משוער (1 ש"ח בבאט):</label>
+                <input type="number" id="exchangeRate" value="9.5" step="0.1" oninput="convertCurrency()">
+                <h4 style="margin-top: 10px;">סה"כ בשקלים: <span id="ilsResult" style="color:var(--primary-dark);">0</span> ₪</h4>
+            </div>
+
+            <div class="card-box">
+                <h3>➕ הוספת הוצאה חדשה</h3>
+                <input type="date" id="expDate">
+                <input type="text" id="expDesc" placeholder="תיאור ההוצאה (למשל: מונית / מלון / ארוחה)">
+                <input type="number" id="expCost" placeholder="סכום בבאט (THB)">
+                <select id="expCategory">
+                    <option value="אוכל">🍽️ אוכל</option>
+                    <option value="תחבורה">🚕 תחבורה</option>
+                    <option value="אטרקציות">🎟️ אטרקציות</option>
+                    <option value="קניות">🛍️ קניות</option>
+                    <option value="מלון">🏨 לינה</option>
+                </select>
+                <button class="btn-main" onclick="addExpense()">רשום הוצאה</button>
+            </div>
+        </div>
+
+        <h3 style="margin-top:20px;">📊 פירוט הוצאות</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>תאריך</th>
+                        <th>תיאור</th>
+                        <th>קטגוריה</th>
+                        <th>סכום (THB)</th>
+                        <th>סכום (₪)</th>
+                        <th>פעולות</th>
+                    </tr>
+                </thead>
+                <tbody id="expensesTable"></tbody>
+            </table>
+        </div>
+        <h4 style="text-align: left; margin-top: 10px;">
+            סה"כ הוצאות: <span id="totalExpensesTHB" style="color:var(--accent);">0</span> THB (<span id="totalExpensesILS" style="color:var(--primary);">0</span> ₪)
+        </h4>
+    </div>
+
+    <!-- 3. PACKING TAB -->
+    <div id="packing" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">🧳 רשימת ציוד אישית ומשותפת</h2>
+        <div style="margin-bottom: 20px; display:flex; flex-wrap:wrap; gap:5px;">
+            <button class="sub-tab-btn active" onclick="switchPerson('יוסף', this)">👨 יוסף</button>
+            <button class="sub-tab-btn" onclick="switchPerson('שירן', this)">👩 שירן</button>
+            <button class="sub-tab-btn" onclick="switchPerson('אייל', this)">👦 אייל (16)</button>
+            <button class="sub-tab-btn" onclick="switchPerson('שי', this)">👧 שי (14)</button>
+            <button class="sub-tab-btn" style="background:#fef3c7; border-color:#f59e0b; color:#b45309;" onclick="switchPerson('משותף', this)">🤝 ציוד משותף</button>
+        </div>
+
+        <div class="card-box" style="margin-bottom: 20px; background: var(--card);">
+            <h3>הוספת פריט ל-<span id="personTitle" style="color:var(--primary);">יוסף</span></h3>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="newPackingItem" placeholder="שם הפריט להוספה">
+                <button class="btn-main" style="width: auto; white-space: nowrap; margin-bottom:12px;" onclick="addPackingItem()">הוסף פריט</button>
+            </div>
+        </div>
+
+        <div id="personalPackingContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px;"></div>
+    </div>
+
+    <!-- 4. BUCKET LIST TAB -->
+    <div id="bucket" class="section-block">
+        <h2 class="section-title" style="margin-top:0;">⭐ "יעדים חייבים" – רשימת החלומות המשפחתית</h2>
+        <div class="card-box">
+            <input type="text" id="bucketPerson" placeholder="שם הנוסע (יוסף / שירן / אייל / שי)">
+            <input type="text" id="bucketWish" placeholder="הפעילות/המקום שתרצו לבקר">
+            <button class="btn-main" onclick="addBucketItem()">הוסף לרשימה</button>
+        </div>
+        
+        <div class="table-container" style="margin-top:20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>נוסע</th>
+                        <th>משאלה / יעד</th>
+                        <th style="width: 80px;">מחיקה</th>
+                    </tr>
+                </thead>
+                <tbody id="bucketListTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+  </div>
+
+<script>
+let selectedDate = "09.11.26";
+let currentPerson = "יוסף";
+let deviceUser = localStorage.getItem('thailand_device_user') || "";
+
+// Checklist items for quick tab
+const quickChecklistItems = [
+    "דרכונים בתוקף (לפחות 6 חודשים)",
+    "ביטוח נסיעות (כולל ספורט אתגרי)",
+    "כרטיסי אשראי בינלאומיים + מזומן",
+    "נרתיק אטום למים לטלפון",
+    "בגדי ים וציוד שנורקלינג",
+    "חבילת גלישה / eSIM מותקן",
+    "תרופות ועזרה ראשונה",
+    "מטענים וממתאמי שקע לתאילנד"
+];
+
+let preflightStates = JSON.parse(localStorage.getItem('thailand_checklist_v4')) || {};
+
+// Dynamic schedule storage
+let defaultSchedule = JSON.parse(localStorage.getItem('thailand_schedule_v4')) || {
+    "09.11.26": { title: "הכנות אחרונות ואריזות", events: [] },
+    "10.11.26": { title: "טיסה לפוקט (דרכי אבו דאבי)", events: [{ title: "טיסה EY610 מנתב\"ג ב-06:20 ➔ אבו דאבי ➔ EY414 לפוקט (נחיתה 23:50)", type: "✈️ טיסה", time: "06:20", link: "" }] },
+    "11.11.26": { title: "פוקט - התארגנות ומנוחה", events: [{ title: "צ'ק אין למלון והתרעננות", type: "🏨 מלון", time: "01:00", link: "" }] },
+    "13.11.26": { title: "פוקט - ערב שבת", events: [{ title: "ארוחת שישי בבית חב\"ד פוקט", type: "🍽️ מסעדה", time: "18:30", link: "https://maps.google.com/?q=Chabad+House+Phuket" }] },
+    "22.11.26": { title: "מעבר לבנגקוק", events: [{ title: "טיסת פנים TG206 מפוקט (11:50) לבנגקוק BKK (13:20)", type: "✈️ טיסה", time: "11:50", link: "" }] },
+    "24.11.26": { title: "חזרה לישראל", events: [{ title: "טיסה EY405 מבנגקוק ב-14:40 ➔ אבו דאבי ➔ EY599 לנחיתה בנתב\"ג ב-23:40", type: "✈️ טיסה", time: "14:40", link: "" }] }
+};
+
+// Journal storage
+let dailyJournals = JSON.parse(localStorage.getItem('thailand_journals_v4')) || {};
+
+// Full Packing Lists updated according to images
+const defaultPersonalPacking = {
+    "יוסף": ["פספורט", "חולצות קצרות", "מכנסיים קצרים", "תחתונים", "גרביים שחורות", "גרבי ספורט", "כובע קסקט", "מכנס לשינה", "אוזניות בלוטוס", "מטען נייד", "תחבושות, צמר גפן, קיסמים", "נעלי ספורט", "כפכפים", "גומיות", "גינסים", "לונג", "נרתיק למשקפי שמש", "מחצלת", "תיק צד", "מכונת תספורת", "סכין גילוח", "בושם", "חולצות ארוכות", "מגבונים", "שק כביסה", "מכנס מחויט", "חגורה שחורה", "קרדיגן שחור", "וסט שחור", "גקט עור", "מטען לשעון", "מנעול למזוודה", "ערכת טיסה", "דאודורנט", "מכנס לשינה", "משקפי שמש", "בקבוק מים", "דולרים", "יורו", "מטען נייד"],
+    "שירן": ["פספורט", "בגד ים", "חולצות קצרות", "מכנסיים קצרים", "תחתונים", "גופיות", "נעלי ספורט", "כפכפים", "משקפי שמש", "חולצה ארוכה / ג'קט", "שק כביסה", "גומיות לשיער", "קרם לשיער", "תחתוניות / פדים", "מחליק שיער שירן", "תיק איפור שירן", "כלי רחצה", "גלולות שירן", "תיק גב", "אוזניות", "כובע"],
+    "אייל": ["פספורט", "בגד ים", "מכנסיים קצרים", "חולצות קצרות", "גופיות", "פיג'מה אייל", "תחתונים", "גרביים לאייל", "נעלי ספורט", "כפכפים", "מברשת שיניים", "דאודורנט", "תיק גב", "מטען לנייד", "משקפי שמש", "כובע", "אוזניות", "מטען נייד"],
+    "שי": ["פספורט", "בגד ים", "מכנסיים קצרים", "חולצות קצרות", "גופיות", "פיג'מה שי", "תחתונים", "גרביים לשי", "נעלי ספורט", "כפכפים", "מברשת שיניים", "תחתוניות / פדים", "ספריי הגנה", "משקפי שמש", "תיק איפור", "מסרק", "גומיות לשיער", "תיק גב", "כובע", "אוזניות", "מטען לנייד", "מטען נייד"],
+    "משותף": ["ביטוח חוץ", "נובימול", "חבילת גלישה", "ספריי הגנה", "פלסטרים", "אלוורה", "אופטלגין", "סלפט", "לחם לל\"ג", "טוסטר לאייל"]
+};
+
+let personalPacking = JSON.parse(localStorage.getItem('thailand_personal_packing_v5')) || defaultPersonalPacking;
+let packingStates = JSON.parse(localStorage.getItem('thailand_packing_states_v5')) || {};
+let expenses = JSON.parse(localStorage.getItem('thailand_expenses_v4')) || [];
+let bucketItems = JSON.parse(localStorage.getItem('thailand_bucket_v4')) || [];
+
+function init() {
+    if (!deviceUser) {
+        openUserModal();
+    } else {
+        updateDeviceUserDisplay();
+    }
+    document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
+    renderQuickChecklist();
+    renderDateChips();
+    renderDayContent();
+    renderJournalEntries();
+    renderExpenses();
+    renderPersonalPacking();
+    renderBucket();
 }
+
+function openUserModal() {
+    document.getElementById('userModal').style.display = 'flex';
+}
+
+function setDeviceUser(name) {
+    deviceUser = name;
+    localStorage.setItem('thailand_device_user', name);
+    document.getElementById('userModal').style.display = 'none';
+    updateDeviceUserDisplay();
+    // Pre-fill bucket person or fields if helpful
+    document.getElementById('bucketPerson').value = name;
+}
+
+function updateDeviceUserDisplay() {
+    const lbl = document.getElementById('currentDeviceUserLabel');
+    const authorLbl = document.getElementById('journalAuthorDisplay');
+    lbl.innerText = deviceUser || 'לא הוגדר';
+    if (authorLbl) authorLbl.innerText = deviceUser || 'אורח';
+}
+
+function showTab(tabId, btn) {
+    document.querySelectorAll('.section-block').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+}
+
+function renderQuickChecklist() {
+    const container = document.getElementById('quickChecklistGrid');
+    container.innerHTML = '';
+    quickChecklistItems.forEach((item, index) => {
+        const checked = preflightStates[index] ? 'checked' : '';
+        container.innerHTML += `
+            <label class="checklist-item">
+                <input type="checkbox" ${checked} onchange="toggleQuickChecklist(${index})"> 
+                ${item}
+            </label>
+        `;
+    });
+}
+
+function toggleQuickChecklist(index) {
+    preflightStates[index] = !preflightStates[index];
+    localStorage.setItem('thailand_checklist_v4', JSON.stringify(preflightStates));
+}
+
+function renderDateChips() {
+    const container = document.getElementById('dateChips');
+    container.innerHTML = '';
+    for (let d = 9; d <= 24; d++) {
+        const dateStr = (d < 10 ? '0' + d : d) + '.11.26';
+        const chip = document.createElement('div');
+        chip.className = `date-chip ${dateStr === selectedDate ? 'active' : ''}`;
+        chip.innerText = dateStr;
+        chip.onclick = () => {
+            selectedDate = dateStr;
+            renderDateChips();
+            renderDayContent();
+            renderJournalEntries();
+        };
+        container.appendChild(chip);
+    }
+}
+
+function renderDayContent() {
+    const container = document.getElementById('dayContent');
+    const dayData = defaultSchedule[selectedDate] || { title: "יום טיול חופשי", events: [] };
+    
+    let html = `<h3>תאריך: <span style="color:var(--primary-dark)">${selectedDate}</span> - ${dayData.title}</h3>`;
+
+    if (dayData.events.length === 0) {
+        html += `<p style="color:var(--text-muted);">אין אירועים מתוכננים כרגע ליום זה.</p>`;
+    } else {
+        html += `<div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">`;
+        dayData.events.forEach((e, index) => {
+            html += `<div style="background:#fff; border:1px solid var(--border); border-right:4px solid var(--accent); padding:12px 16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                    <strong style="color:var(--primary-dark)">[${e.time}] ${e.type}:</strong> ${e.title}
+                    ${e.link ? `<br><a href="${e.link}" target="_blank" style="font-size:0.85rem; color:var(--primary);">📍 מפה</a>` : ''}
+                </div>
+                <button class="btn-danger" onclick="deleteEvent(${index})">מחיקה</button>
+            </div>`;
+        });
+        html += `</div>`;
+    }
+    container.innerHTML = html;
+}
+
+function addJournalEntry() {
+    const textInput = document.getElementById('journalText');
+    const text = textInput.value.trim();
+    if (!text) return alert('נא לכתוב טקסט ביומן המסע');
+
+    if (!dailyJournals[selectedDate]) {
+        dailyJournals[selectedDate] = [];
+    }
+
+    const author = deviceUser || 'אורח';
+    const timestamp = new Date().toLocaleTimeString('he-IL', {hour: '2-digit', minute:'2-digit'});
+
+    dailyJournals[selectedDate].push({ author, text, timestamp });
+    localStorage.setItem('thailand_journals_v4', JSON.stringify(dailyJournals));
+    textInput.value = '';
+    renderJournalEntries();
+}
+
+function renderJournalEntries() {
+    const listContainer = document.getElementById('journalEntriesList');
+    if (!listContainer) return;
+    listContainer.innerHTML = '';
+
+    const entries = dailyJournals[selectedDate] || [];
+    if (entries.length === 0) {
+        listContainer.innerHTML = `<p style="font-size: 0.9rem; color: var(--text-muted);">טרם נוספו רשמים ליומן המסע בתאריך זה.</p>`;
+        return;
+    }
+
+    entries.forEach((entry, idx) => {
+        listContainer.innerHTML += `
+            <div style="background: white; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; position: relative;">
+                <div style="display:flex; justify-content:space-between; margin-bottom: 4px; font-size: 0.85rem; color: #166534;">
+                    <strong>מאת: ${entry.author}</strong>
+                    <span>${entry.timestamp}</span>
+                </div>
+                <p style="font-size: 0.95rem; color: var(--text); white-space: pre-wrap;">${entry.text}</p>
+                <button class="btn-danger" style="margin-top:8px;" onclick="deleteJournalEntry(${idx})">מחיקה</button>
+            </div>
+        `;
+    });
+}
+
+function deleteJournalEntry(idx) {
+    if (confirm('למחוק רשומה זו מיומן המסע?')) {
+        dailyJournals[selectedDate].splice(idx, 1);
+        localStorage.setItem('thailand_journals_v4', JSON.stringify(dailyJournals));
+        renderJournalEntries();
+    }
+}
+
+function addCustomEvent() {
+    const title = document.getElementById('eventTitle').value.trim();
+    const type = document.getElementById('eventType').value;
+    const time = document.getElementById('eventTime').value.trim() || 'כל היום';
+    const link = document.getElementById('eventLink').value.trim();
+
+    if (!title) return alert('נא להזין תיאור אירוע');
+
+    if (!defaultSchedule[selectedDate]) {
+        defaultSchedule[selectedDate] = { title: "יום טיול", events: [] };
+    }
+    defaultSchedule[selectedDate].events.push({ title, type, time, link });
+    localStorage.setItem('thailand_schedule_v4', JSON.stringify(defaultSchedule));
+    
+    document.getElementById('eventTitle').value = '';
+    document.getElementById('eventTime').value = '';
+    document.getElementById('eventLink').value = '';
+    renderDayContent();
+}
+
+function deleteEvent(index) {
+    if (confirm('למחוק אירוע זה?')) {
+        defaultSchedule[selectedDate].events.splice(index, 1);
+        localStorage.setItem('thailand_schedule_v4', JSON.stringify(defaultSchedule));
+        renderDayContent();
+    }
+}
+
+function convertCurrency() {
+    const thb = parseFloat(document.getElementById('thbAmount').value) || 0;
+    const rate = parseFloat(document.getElementById('exchangeRate').value) || 9.5;
+    document.getElementById('ilsResult').innerText = (thb / rate).toFixed(2);
+}
+
+function addExpense() {
+    const date = document.getElementById('expDate').value;
+    const desc = document.getElementById('expDesc').value.trim();
+    const cost = parseFloat(document.getElementById('expCost').value);
+    const cat = document.getElementById('expCategory').value;
+    const rate = parseFloat(document.getElementById('exchangeRate').value) || 9.5;
+
+    if (!desc || isNaN(cost)) return alert('נא להזין תיאור וסכום');
+
+    expenses.push({ date, desc, cost, cat, ils: (cost / rate).toFixed(2) });
+    localStorage.setItem('thailand_expenses_v4', JSON.stringify(expenses));
+    document.getElementById('expDesc').value = '';
+    document.getElementById('expCost').value = '';
+    renderExpenses();
+}
+
+function deleteExpense(index) {
+    if (confirm('למחוק הוצאה זו?')) {
+        expenses.splice(index, 1);
+        localStorage.setItem('thailand_expenses_v4', JSON.stringify(expenses));
+        renderExpenses();
+    }
+}
+
+function renderExpenses() {
+    const table = document.getElementById('expensesTable');
+    table.innerHTML = '';
+    let totalTHB = 0;
+    let totalILS = 0;
+
+    expenses.forEach((e, idx) => {
+        totalTHB += e.cost;
+        totalILS += parseFloat(e.ils);
+        table.innerHTML += `<tr>
+            <td>${e.date || '-'}</td>
+            <td>${e.desc}</td>
+            <td>${e.cat}</td>
+            <td>${e.cost.toLocaleString()} THB</td>
+            <td>${e.ils} ₪</td>
+            <td><button class="btn-danger" onclick="deleteExpense(${idx})">מחיקה</button></td>
+        </tr>`;
+    });
+
+    document.getElementById('totalExpensesTHB').innerText = totalTHB.toLocaleString();
+    document.getElementById('totalExpensesILS').innerText = totalILS.toFixed(2);
+}
+
+function switchPerson(person, btn) {
+    currentPerson = person;
+    document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('personTitle').innerText = person;
+    renderPersonalPacking();
+}
+
+function renderPersonalPacking() {
+    const container = document.getElementById('personalPackingContainer');
+    container.innerHTML = '';
+    const items = personalPacking[currentPerson] || [];
+
+    items.forEach((item, index) => {
+        const itemKey = `${currentPerson}_${item}`;
+        const checked = packingStates[itemKey] ? 'checked' : '';
+        const isFirst = index === 0;
+        const isLast = index === items.length - 1;
+
+        container.innerHTML += `<div class="checklist-item" style="justify-content:space-between;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+                <input type="checkbox" ${checked} onchange="togglePacking('${itemKey}')"> 
+                ${item}
+            </label>
+            <div style="display:flex; gap:4px; align-items:center;">
+                <button class="btn-move" onclick="editPackingItem(${index})">✏️</button>
+                <button class="btn-move" onclick="movePackingItemUp(${index})" ${isFirst ? 'disabled style="opacity:0.3;cursor:default;"' : ''}>⬆️</button>
+                <button class="btn-move" onclick="movePackingItemDown(${index})" ${isLast ? 'disabled style="opacity:0.3;cursor:default;"' : ''}>⬇️</button>
+                <button class="btn-danger" onclick="deletePackingItem(${index})">🗑️</button>
+            </div>
+        </div>`;
+    });
+}
+
+function editPackingItem(index) {
+    const oldItem = personalPacking[currentPerson][index];
+    const newItem = prompt('ערוך את שם הפריט:', oldItem);
+    if (newItem !== null && newItem.trim() !== '') {
+        const trimmed = newItem.trim();
+        const oldKey = `${currentPerson}_${oldItem}`;
+        const newKey = `${currentPerson}_${trimmed}`;
+        
+        if (packingStates[oldKey] !== undefined) {
+            packingStates[newKey] = packingStates[oldKey];
+            delete packingStates[oldKey];
+            localStorage.setItem('thailand_packing_states_v5', JSON.stringify(packingStates));
+        }
+
+        personalPacking[currentPerson][index] = trimmed;
+        localStorage.setItem('thailand_personal_packing_v5', JSON.stringify(personalPacking));
+        renderPersonalPacking();
+    }
+}
+
+function movePackingItemUp(index) {
+    if (index <= 0) return;
+    const list = personalPacking[currentPerson];
+    const temp = list[index];
+    list[index] = list[index - 1];
+    list[index - 1] = temp;
+    localStorage.setItem('thailand_personal_packing_v5', JSON.stringify(personalPacking));
+    renderPersonalPacking();
+}
+
+function movePackingItemDown(index) {
+    const list = personalPacking[currentPerson];
+    if (index >= list.length - 1) return;
+    const temp = list[index];
+    list[index] = list[index + 1];
+    list[index + 1] = temp;
+    localStorage.setItem('thailand_personal_packing_v5', JSON.stringify(personalPacking));
+    renderPersonalPacking();
+}
+
+function togglePacking(key) {
+    packingStates[key] = !packingStates[key];
+    localStorage.setItem('thailand_packing_states_v5', JSON.stringify(packingStates));
+}
+
+function addPackingItem() {
+    const input = document.getElementById('newPackingItem');
+    const val = input.value.trim();
+    if (!val) return;
+    if (!personalPacking[currentPerson]) personalPacking[currentPerson] = [];
+    personalPacking[currentPerson].push(val);
+    localStorage.setItem('thailand_personal_packing_v5', JSON.stringify(personalPacking));
+    input.value = '';
+    renderPersonalPacking();
+}
+
+function deletePackingItem(index) {
+    if (confirm('למחוק פריט זה מהרשימה?')) {
+        personalPacking[currentPerson].splice(index, 1);
+        localStorage.setItem('thailand_personal_packing_v5', JSON.stringify(personalPacking));
+        renderPersonalPacking();
+    }
+}
+
+function addBucketItem() {
+    const person = document.getElementById('bucketPerson').value.trim();
+    const wish = document.getElementById('bucketWish').value.trim();
+    if (!person || !wish) return alert('נא למלא שם ומשאלה');
+
+    bucketItems.push({ person, wish });
+    localStorage.setItem('thailand_bucket_v4', JSON.stringify(bucketItems));
+    document.getElementById('bucketWish').value = '';
+    renderBucket();
+}
+
+function deleteBucketItem(index) {
+    if (confirm('למחוק יעד זה?')) {
+        bucketItems.splice(index, 1);
+        localStorage.setItem('thailand_bucket_v4', JSON.stringify(bucketItems));
+        renderBucket();
+    }
+}
+
+function renderBucket() {
+    const table = document.getElementById('bucketListTable');
+    table.innerHTML = '';
+    bucketItems.forEach((i, idx) => {
+        table.innerHTML += `<tr>
+            <td><strong>${i.person}</strong></td>
+            <td>${i.wish}</td>
+            <td><button class="btn-danger" onclick="deleteBucketItem(${idx})">מחיקה</button></td>
+        </tr>`;
+    });
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
