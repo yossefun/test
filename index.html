@@ -265,11 +265,10 @@
     <div id="documents" class="section-block">
         <h2 class="section-title" style="margin-top:0;">📁 מסמכים, קבלות ואישורי מלונות</h2>
         <div class="card-box" style="background: var(--card); margin-bottom: 20px;">
-            <h3>➕ העלאת קובץ חדש לענן (עם זיהוי אוטומטי מהשם)</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">טיפ: אם תקרא לקובץ למשל <code>מלון_פוקט_12.11.26.pdf</code>, המערכת תזהה את התאריך והקטגוריה לבד!</p>
+            <h3>➕ העלאת קובץ חדש לענן</h3>
             <div class="flex-grid">
                 <div style="flex:1;">
-                    <input type="text" id="docDesc" placeholder="תיאור המסמך (יתמלא אוטומטית)">
+                    <input type="text" id="docDesc" placeholder="תיאור המסמך (למשל: מלון פוקט / כרטיס טיסה)">
                     <select id="docCategory">
                         <option value="🏨 אישור מלון">🏨 אישור מלון</option>
                         <option value="✈️ כרטיס טיסה">✈️ כרטיס טיסה</option>
@@ -279,7 +278,7 @@
                     </select>
                 </div>
                 <div style="flex:1;">
-                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 2px;">תאריך יעד לטיול (יעודכן אוטומטית מהשם):</label>
+                    <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 2px;">תאריך רלוונטי לטיול (לסנכרון בלו"ז):</label>
                     <input type="date" id="docDate" style="padding: 6px;">
                     <label style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-top: 2px;">בחר קובץ (תמונה / PDF):</label>
                     <input type="file" id="fileInput" accept="image/*,application/pdf" style="padding: 6px;">
@@ -534,47 +533,9 @@ function init() {
     }
 
     document.getElementById('expDate').value = new Date().toISOString().split('T')[0];
-
-    // מנגנון זיהוי אוטומטי של תאריך וקטגוריה מתוך שם הקובץ הנבחר
-    const fileInput = document.getElementById('fileInput');
-    if (fileInput) {
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const fileName = file.name;
-            
-            // זיהוי קטגוריה אוטומטי
-            if (fileName.includes('מלון') || fileName.toLowerCase().includes('hotel')) {
-                document.getElementById('docCategory').value = '🏨 אישור מלון';
-            } else if (fileName.includes('טיסה') || fileName.toLowerCase().includes('flight')) {
-                document.getElementById('docCategory').value = '✈️ כרטיס טיסה';
-            } else if (fileName.includes('קבלה') || fileName.toLowerCase().includes('receipt')) {
-                document.getElementById('docCategory').value = '🧾 קבלה';
-            }
-
-            // חילוץ תאריך אוטומטי משם הקובץ (למשל 12.11.26 או 12-11-2026)
-            const dateRegex = /(\d{2}[-./]\d{2}[-./]\d{2,4})|(\d{4}[-./]\d{2}[-./]\d{2})/;
-            const match = fileName.match(dateRegex);
-            if (match) {
-                let rawDate = match[0].replace(/[-/]/g, '.');
-                let parts = rawDate.split('.');
-                if (parts.length === 3) {
-                    let day = parts[0];
-                    let month = parts[1];
-                    let year = parts[2].length === 2 ? '20' + parts[2] : parts[2];
-                    if (year.length === 4 && day.length === 2 && month.length === 2) {
-                        document.getElementById('docDate').value = `${year}-${month}-${day}`;
-                    }
-                }
-            }
-
-            // חילוץ תיאור אוטומטי משם הקובץ (ניקוי סיומת ותאריכים)
-            let cleanDesc = fileName.replace(/\.[^/.]+$/, "").replace(dateRegex, '').replace(/[-_]/g, ' ').trim();
-            if (cleanDesc) {
-                document.getElementById('docDesc').value = cleanDesc;
-            }
-        });
-    }
+    const todayStr = new Date().toISOString().split('T')[0];
+    const docDateInput = document.getElementById('docDate');
+    if (docDateInput) docDateInput.value = todayStr;
 
     renderQuickInfo();
     renderQuickChecklist();
@@ -615,10 +576,12 @@ function renderQuickInfo() {
     if (!quickInfoBody) return;
     quickInfoBody.innerHTML = '';
     
+    // בסיס קבוע
     TRIP_CONFIG.quickInfo.forEach(row => {
         quickInfoBody.innerHTML += `<tr><td><strong>${row.topic}</strong></td><td>${row.details}</td><td>${row.notes}</td></tr>`;
     });
 
+    // הוספה דינמית של מלונות וטיסות מתוך המסמכים שהועלו
     tripDocuments.forEach(doc => {
         if (doc.category === '🏨 אישור מלון' || doc.category === '✈️ כרטיס טיסה') {
             const dateStr = doc.docDate ? ` (תאריך: ${doc.docDate})` : '';
@@ -690,6 +653,7 @@ function renderDayDocuments() {
     if (!container) return;
     container.innerHTML = '';
 
+    // המרת selectedDate מתבנית DD.MM.YY ל-YYYY-MM-DD לשם השוואה מול התאריך שנבחר בהעלאה
     const parts = selectedDate.split('.');
     const isoDateFormatted = `20${parts[2]}-${parts[1]}-${parts[0]}`;
 
